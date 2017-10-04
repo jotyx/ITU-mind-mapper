@@ -1,18 +1,8 @@
-import 'babel-polyfill';
 import React from 'react';
-import { render } from 'react-dom';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import App from './App';
-import configureStore from './utils/store';
-
-import 'normalize.css';
-import './styles/style.css';
-
-injectTapEventPlugin();
-
-const store = configureStore();
-
-render(<App store={store} />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
