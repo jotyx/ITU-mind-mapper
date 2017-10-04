@@ -1,6 +1,6 @@
 import React from "react";
-import Main from "./containers/Main";
+import MindMapper from "./containers/MindMapper";
 
-const App = () => <Main />;
+const App = () => <MindMapper />;
 
 export default App;
