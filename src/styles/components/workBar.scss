@@ -1,0 +1,64 @@
+.work-bar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    height: $height-work-bar;
+    background-color: $c-blue-light;
+    border-bottom: 1px solid $c-blue;
+
+    .menu, .icon, .vertical-line {
+        margin-left: 15px;
+    }
+
+    .vertical-line {
+        border-left: 1px solid $c-blue;
+        height: 100%;
+    }
+
+    .icon {
+        font-size: 36px;
+        cursor: pointer;
+
+        &:hover {
+            color: $c-blue;
+        }
+
+        &-tooltip {
+            background-color: $c-blue !important;
+  
+            &.place-top {
+              &:after {
+                border-top-color: $c-blue !important;
+                border-top-style: solid !important;
+                border-top-width: 6px !important;
+              }
+            }
+  
+            &.place-right {
+              &:after {
+                border-right-color: $c-blue !important;
+                border-right-style: solid !important;
+                border-right-width: 6px !important;
+              }
+            }
+  
+            &.place-left {
+              &:after {
+                border-left-color: $c-blue !important;
+                border-left-style: solid !important;
+                border-left-width: 6px !important;
+              }
+            }
+  
+            &.place-bottom {
+              &:after {
+                border-bottom-color: $c-blue !important;
+                border-bottom-style: solid !important;
+                border-bottom-width: 6px !important;
+              }
+            }
+          }
+    }
+}

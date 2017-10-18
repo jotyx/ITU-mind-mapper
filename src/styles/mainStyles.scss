@@ -1,0 +1,19 @@
+.desktop-only {
+    display: none;
+}
+
+@media (min-width: $breakpoint-desktop) {
+    .desktop-only {
+        display: block;
+    }
+}
+
+.mobile-only {
+    display: none;
+}
+
+@media (max-width: $breakpoint-desktop) {
+    .mobile-only {
+        display: block;
+    }
+}

@@ -1,0 +1,6 @@
+.desktop-only {
+  display: none; }
+
+@media (min-width: ) {
+  .desktop-only {
+    display: block; } }
