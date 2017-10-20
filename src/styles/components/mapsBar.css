@@ -1,3 +1,5 @@
 .maps-bar {
-  width: calc(100% - 2px);
-  margin-left: 1px; }
+  width: 100%; }
+  .maps-bar .icon {
+    font-size: 12px;
+    cursor: pointer; }

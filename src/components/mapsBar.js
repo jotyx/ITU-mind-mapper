@@ -2,29 +2,36 @@ import React from "react";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import { map, findIndex } from "lodash";
-import { Nav, NavItem } from "react-bootstrap";
+import { ButtonGroup, Button } from "react-bootstrap";
+import { FontIcon } from "react-md";
 
-import { setActiveMap } from "../actions/mapsActions";
+import { setActiveMap, removeMap } from "../actions/mapsActions";
 
-const MapsBar = ({ list, setActiveMap }) => {
+const MapsBar = ({ list, setActiveMap, removeMap }) => {
   return (
     <div className="maps-bar">
-      <Nav
-        bsStyle="pills"
-        justified
-        activeKey={findIndex(list, i => i.active)}
-        onSelect={() => null}
-      >
-        {map(list, (item, i) => (
-          <NavItem eventKey={i} onClick={() => setActiveMap(item.label)}>
+      {map(list, (item, i) => (
+        <ButtonGroup key={i}>
+          <Button
+            bsStyle={item.active ? "primary" : "default"}
+            onClick={() => setActiveMap(item.label)}
+          >
             {item.label}
-          </NavItem>
-        ))}
-      </Nav>
+          </Button>
+          {list.length > 1 && (
+            <Button
+              bsStyle={item.active ? "primary" : "default"}
+              onClick={() => removeMap(item.label)}
+            >
+              <FontIcon iconClassName={"fa fa-times"} className="icon" />
+            </Button>
+          )}
+        </ButtonGroup>
+      ))}
     </div>
   );
 };
 
 export default compose(
-  connect(({ maps: { list } }) => ({ list }), { setActiveMap })
+  connect(({ maps: { list } }) => ({ list }), { setActiveMap, removeMap })
 )(MapsBar);

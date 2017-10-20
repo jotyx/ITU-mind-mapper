@@ -1,5 +1,11 @@
+/* ACTIONS CONSTANTS */
+
 export const CONSTANT = "CONSTANT";
 
-export const MAPS = "MAPS";
+export const MAPS_ACTIVE = "MAPS_ACTIVE";
+export const MAPS_ADD = "MAPS_ADD";
+export const MAPS_REMOVE = "MAPS_REMOVE";
 
-export const ACTIVE_MAP = "ACTIVE_MAP";
+/* OTHER CONSTANTS */
+
+export const NEW_MAP_LABEL = "New map";

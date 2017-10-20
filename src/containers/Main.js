@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MapsBar from "../components/mapsBar";
+import MapsBar from "../components/MapsBar";
 import WorkBar from "../components/workBar";
 import Map from "../components/map";
 

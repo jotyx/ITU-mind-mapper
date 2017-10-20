@@ -1,18 +1,16 @@
-import { map } from "lodash";
+import { map, filter } from "lodash";
 
 import * as c from "../actions/constants";
 
 const initialState = {
   list: [
-    { label: "Mapa 1", active: true },
-    { label: "Mapa 2", active: false },
-    { label: "Mapa 3", active: false }
+    { label: `${c.NEW_MAP_LABEL} 1`, active: true }
   ]
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case c.MAPS:
+    case c.MAPS_ACTIVE:
       return {
         ...state,
         list: map(
@@ -21,6 +19,19 @@ const reducer = (state = initialState, action) => {
             item.label === action.payload.label
               ? { ...item, active: true }
               : { ...item, active: false }
+        )
+      };
+    case c.MAPS_ADD:
+      return {
+        ...state,
+        list: [...state.list, action.payload.map]
+      };
+    case c.MAPS_REMOVE:
+      return {
+        ...state,
+        list: filter(
+          state.list,
+          (item, i) => item.label !== action.payload.label
         )
       };
     default:
