@@ -2,6 +2,7 @@ import React from "react";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import { map } from "lodash";
+import classNames from "classnames";
 import { ButtonGroup, Button } from "react-bootstrap";
 import { FontIcon } from "react-md";
 
@@ -13,6 +14,7 @@ const MapsBar = ({ list, setActiveMap, removeMap }) => {
       {map(list, (item, i) => (
         <ButtonGroup key={i}>
           <Button
+            className={classNames("button", { single: list.length === 1 })}
             bsStyle={item.active ? "primary" : "default"}
             onClick={() => setActiveMap(item.name)}
           >
@@ -20,6 +22,7 @@ const MapsBar = ({ list, setActiveMap, removeMap }) => {
           </Button>
           {list.length > 1 && (
             <Button
+              className="button-remove"
               bsStyle={item.active ? "primary" : "default"}
               onClick={() => removeMap(item.name)}
             >

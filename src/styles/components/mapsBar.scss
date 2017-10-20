@@ -5,4 +5,20 @@
     font-size: 12px;
     cursor: pointer;
   }
+
+  .button {
+    max-width: calc(100vw - 70px);
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    &.single {
+      max-width: calc(100vw - 20px);
+    }
+
+    &-remove {
+      width: 50px;
+    }
+  }
 }
