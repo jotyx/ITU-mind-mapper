@@ -11,4 +11,4 @@ export const MAPS_RENAME = "MAPS_RENAME";
 
 /* OTHER CONSTANTS */
 
-export const NEW_MAP_NAME = "New map";
+export const NEW_MAP_NAME = "Nová mapa";
