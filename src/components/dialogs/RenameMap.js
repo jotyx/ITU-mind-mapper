@@ -31,7 +31,7 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    onSubmit: dialog => async (formData, dispatch, props) => {
+    onSubmit: dialog => async (formData, props) => {
       const { renameMap, initialValues } = props;
       if (renameMap(initialValues.name, formData.name)) dialog.closeDialog();
       else

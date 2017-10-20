@@ -1,9 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
+import { compose } from "recompose";
 
 import Menu from "./Menu";
 import Icon from "./Icon";
 
-const WorkBar = () => {
+import { setDialog } from "../../actions/appActions";
+
+const WorkBar = ({ setDialog }) => {
   return (
     <div className="work-bar">
       <Menu />
@@ -65,10 +69,14 @@ const WorkBar = () => {
       <Icon
         iconType="fa-question-circle"
         tooltipLabel="Nápověda"
-        onClickAction={() => null}
+        onClickAction={() =>
+          setDialog("Info", {
+            title: "Nápověda",
+            text: "Nějaká super nápověda."
+          })}
       />
     </div>
   );
 };
 
-export default WorkBar;
+export default compose(connect(null, { setDialog }))(WorkBar);
