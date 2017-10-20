@@ -7,6 +7,7 @@ import { isEmpty } from "lodash";
 
 import DialogContainer from "./DialogContainer";
 import Input from "../form/Input";
+import * as Validation from "../form/Validation";
 
 import { renameMap } from "../../actions/mapsActions";
 
@@ -19,7 +20,12 @@ const RenameMap = ({ handleSubmit, initialValues }) => (
   >
     {!isEmpty(initialValues) && (
       <form onSubmit={handleSubmit}>
-        <Field component={Input} name="name" placeholder="Název mapy" />
+        <Field
+          component={Input}
+          name="name"
+          placeholder="Název mapy"
+          validate={[Validation.required]}
+        />
       </form>
     )}
   </DialogContainer>
@@ -31,7 +37,7 @@ export default compose(
   }),
   withRouter,
   withHandlers({
-    onSubmit: dialog => async (formData, props) => {
+    onSubmit: dialog => async (formData, dispatch, props) => {
       const { renameMap, initialValues } = props;
       if (renameMap(initialValues.name, formData.name)) dialog.closeDialog();
       else

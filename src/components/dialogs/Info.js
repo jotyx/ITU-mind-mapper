@@ -23,7 +23,7 @@ export default compose(
   connect(({ app: { dialog: { data } } }) => ({ data }), null),
   withRouter,
   withHandlers({
-    onSubmit: dialog => async (formData, props) => {
+    onSubmit: dialog => async (formData, dispatch, props) => {
       dialog.closeDialog();
     }
   }),
