@@ -19,7 +19,7 @@ export const newMap = () => (dispatch, getState) => {
       filter(getState().maps.list, m =>
         m.name.match(new RegExp("^" + NEW_MAP_NAME + " \\d+$"))
       ),
-      m => parseInt(m.name.replace(/^\D+/g, ""))
+      m => parseInt(m.name.replace(/^\D+/g, ""), 10)
     )
   );
 

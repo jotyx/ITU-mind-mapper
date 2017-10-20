@@ -1,7 +1,7 @@
 import React from "react";
 import { compose } from "recompose";
 import { connect } from "react-redux";
-import { map, findIndex } from "lodash";
+import { map } from "lodash";
 import { ButtonGroup, Button } from "react-bootstrap";
 import { FontIcon } from "react-md";
 

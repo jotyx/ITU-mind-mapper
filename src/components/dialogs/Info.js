@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose, withHandlers } from "recompose";
-import { reduxForm, Field, SubmissionError } from "redux-form";
+import { reduxForm } from "redux-form";
 import { withRouter } from "react-router-dom";
 
 import DialogContainer from "./DialogContainer";
