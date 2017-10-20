@@ -14,14 +14,14 @@ const MapsBar = ({ list, setActiveMap, removeMap }) => {
         <ButtonGroup key={i}>
           <Button
             bsStyle={item.active ? "primary" : "default"}
-            onClick={() => setActiveMap(item.label)}
+            onClick={() => setActiveMap(item.name)}
           >
-            {item.label}
+            {item.name}
           </Button>
           {list.length > 1 && (
             <Button
               bsStyle={item.active ? "primary" : "default"}
-              onClick={() => removeMap(item.label)}
+              onClick={() => removeMap(item.name)}
             >
               <FontIcon iconClassName={"fa fa-times"} className="icon" />
             </Button>

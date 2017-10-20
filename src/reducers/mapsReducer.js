@@ -3,9 +3,7 @@ import { map, filter } from "lodash";
 import * as c from "../actions/constants";
 
 const initialState = {
-  list: [
-    { label: `${c.NEW_MAP_LABEL} 1`, active: true }
-  ]
+  list: [{ name: `${c.NEW_MAP_NAME} 1`, active: true }]
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,7 +14,7 @@ const reducer = (state = initialState, action) => {
         list: map(
           state.list,
           (item, i) =>
-            item.label === action.payload.label
+            item.name === action.payload.name
               ? { ...item, active: true }
               : { ...item, active: false }
         )
@@ -29,9 +27,17 @@ const reducer = (state = initialState, action) => {
     case c.MAPS_REMOVE:
       return {
         ...state,
-        list: filter(
+        list: filter(state.list, (item, i) => item.name !== action.payload.name)
+      };
+    case c.MAPS_RENAME:
+      return {
+        ...state,
+        list: map(
           state.list,
-          (item, i) => item.label !== action.payload.label
+          (item, i) =>
+            item.name === action.payload.oldName
+              ? { ...item, name: action.payload.newName }
+              : item
         )
       };
     default:

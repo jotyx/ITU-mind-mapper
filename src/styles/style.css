@@ -3556,6 +3556,9 @@ tbody .md-table-row {
   .mobile-only {
     display: block; } }
 
+.error-text {
+  color: #ea5d5d; }
+
 .main {
   display: flex;
   flex-direction: column; }
