@@ -7,7 +7,10 @@ import { DropdownButton, MenuItem } from "react-bootstrap";
 import { newMap } from "../../actions/mapsActions";
 import { setDialog } from "../../actions/appActions";
 
+import { downloadFile } from "../../utils";
+
 const Menu = ({ newMap, setDialog, list }) => {
+  const activeMap = find(list, m => m.active);
   return (
     <div className="menu">
       <DropdownButton
@@ -21,12 +24,22 @@ const Menu = ({ newMap, setDialog, list }) => {
         </MenuItem>
         <MenuItem eventKey="2">Načíst ze souboru</MenuItem>
         <MenuItem divider />
-        <MenuItem eventKey="3">Uložit do souboru</MenuItem>
+        <MenuItem
+          eventKey="3"
+          onClick={() =>
+            downloadFile(
+              `${activeMap.name}.json`,
+              JSON.stringify({ ...activeMap, active: false }),
+              "text/plain"
+            )}
+        >
+          Uložit mapu
+        </MenuItem>
         <MenuItem
           eventKey="4"
           onClick={() =>
             setDialog("RenameMap", {
-              name: find(list, m => m.active).name
+              name: activeMap.name
             })}
         >
           Přejmenovat
