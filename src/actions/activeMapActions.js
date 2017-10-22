@@ -21,11 +21,12 @@ export const newNode = () => (dispatch, getState) => {
       node: {
         title: NEW_NODE_TITLE,
         color: "#FFFFFF",
+        borderColor: "#111111",
+        titleColor: "#111111",
         x: 10,
         y: yPos,
         width: 200,
         height: 100,
-        titleColor: "#111111",
         fontSize: 20,
         active: false
       }
@@ -50,10 +51,11 @@ export const removeNode = () => ({
   payload: {}
 });
 
-export const activeNodeChangeColor = (color, titleColor) => ({
+export const activeNodeChangeColor = (color, borderColor, titleColor) => ({
   type: ACTIVE_MAP_NODE_CHANGE,
   payload: {
     color,
+    borderColor,
     titleColor
   }
 });

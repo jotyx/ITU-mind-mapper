@@ -33,6 +33,7 @@ const WorkBar = ({ setDialog, newNode, activeNode, removeNode }) => {
           onClickAction={() =>
             setDialog("ActiveNodeColorChange", {
               color: activeNode.color,
+              borderColor: activeNode.borderColor,
               titleColor: activeNode.titleColor
             })}
         />

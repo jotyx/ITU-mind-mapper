@@ -3577,6 +3577,9 @@ tbody .md-table-row {
 .margin-bottom {
   margin-bottom: 1em; }
 
+.margin-top {
+  margin-top: 1em; }
+
 .main {
   display: flex;
   flex-direction: column; }
@@ -3645,8 +3648,10 @@ tbody .md-table-row {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    border: 1px solid #000;
+    border-width: 2px;
+    border-style: solid;
     border-radius: 10px;
+    padding: 10px;
     cursor: pointer; }
     .map .node:hover, .map .node.active {
       -webkit-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.57);
@@ -3676,3 +3681,7 @@ tbody .md-table-row {
       -webkit-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
       -moz-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
       box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75); }
+
+.horizontal-line {
+  width: 100%;
+  border-bottom: 1px solid #ccc; }

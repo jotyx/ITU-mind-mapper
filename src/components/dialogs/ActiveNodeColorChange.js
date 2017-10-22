@@ -40,7 +40,7 @@ const ActiveNodeColorChange = ({ handleSubmit, color, data, setDialog }) => (
   >
     {data && (
       <div className="flex-col">
-        <div className="flex-row flex-center">Barva uzlu</div>
+        <div className="flex-row flex-center">Barva pozadí</div>
         <div className="dialog-color-change margin-bottom">
           {map(colors, (c, i) => (
             <div
@@ -50,12 +50,33 @@ const ActiveNodeColorChange = ({ handleSubmit, color, data, setDialog }) => (
               onClick={() =>
                 setDialog("ActiveNodeColorChange", {
                   color: c,
+                  titleColor: data.titleColor,
+                  borderColor: data.borderColor
+                })}
+            />
+          ))}
+        </div>
+        <div className="horizontal-line" />
+        <div className="flex-row flex-center margin-top">Barva okraje</div>
+        <div className="dialog-color-change margin-bottom">
+          {map(colors, (c, i) => (
+            <div
+              key={i}
+              className={classNames("btn-color", {
+                active: c === data.borderColor
+              })}
+              style={{ backgroundColor: c }}
+              onClick={() =>
+                setDialog("ActiveNodeColorChange", {
+                  borderColor: c,
+                  color: data.color,
                   titleColor: data.titleColor
                 })}
             />
           ))}
         </div>
-        <div className="flex-row flex-center">Barva textu</div>
+        <div className="horizontal-line" />
+        <div className="flex-row flex-center margin-top">Barva textu</div>
         <div className="dialog-color-change">
           {map(colors, (c, i) => (
             <div
@@ -67,7 +88,8 @@ const ActiveNodeColorChange = ({ handleSubmit, color, data, setDialog }) => (
               onClick={() =>
                 setDialog("ActiveNodeColorChange", {
                   titleColor: c,
-                  color: data.color
+                  color: data.color,
+                  borderColor: data.borderColor
                 })}
             />
           ))}
@@ -91,7 +113,7 @@ export default compose(
   withHandlers({
     onSubmit: dialog => async (formData, dispatch, props) => {
       const { activeNodeChangeColor, data } = props;
-      activeNodeChangeColor(data.color, data.titleColor);
+      activeNodeChangeColor(data.color, data.borderColor, data.titleColor);
       dialog.closeDialog();
     }
   }),

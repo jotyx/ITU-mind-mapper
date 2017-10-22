@@ -12,10 +12,16 @@
     border-radius: 25px;
     cursor: pointer;
 
-    &:hover, &.active {
-        -webkit-box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.75);
-        -moz-box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.75);
-        box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.75);
+    &:hover,
+    &.active {
+      -webkit-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
+      -moz-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
+      box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.75);
     }
   }
+}
+
+.horizontal-line {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
 }
