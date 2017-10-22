@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import { find } from "lodash";
-import { DropdownButton, MenuItem } from "react-bootstrap";
+import { DropdownButton, MenuItem, Glyphicon } from "react-bootstrap";
+import ReactTooltip from "react-tooltip";
 
 import { newMap } from "../../actions/mapsActions";
 import { setDialog } from "../../actions/appActions";
@@ -14,10 +15,11 @@ const Menu = ({ newMap, setDialog, list }) => {
   return (
     <div className="menu">
       <DropdownButton
-        title="Menu"
+        title={<Glyphicon glyph="menu-hamburger" />}
         bsStyle="primary"
         noCaret
         id="drop-down-menu"
+        data-tip="Menu"
       >
         <MenuItem eventKey="1" onClick={() => newMap()}>
           Nová mapa
@@ -46,6 +48,12 @@ const Menu = ({ newMap, setDialog, list }) => {
         </MenuItem>
         <MenuItem eventKey="5">Exportovat do obrázku</MenuItem>
       </DropdownButton>
+      <ReactTooltip
+        className="icon-tooltip"
+        type="dark"
+        effect="solid"
+        place="bottom"
+      />
     </div>
   );
 };
