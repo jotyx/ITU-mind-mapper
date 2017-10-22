@@ -82,11 +82,22 @@ const reducer = (state = initialState, action) => {
                   ...item,
                   nodes: map(
                     item.nodes,
-                    (n, i) =>
-                      i === action.payload.index
-                        ? { ...n, title: action.payload.title }
-                        : n
+                    n => (n.active ? { ...n, title: action.payload.title } : n)
                   )
+                }
+              : item
+        )
+      };
+    case c.ACTIVE_MAP_NODE_REMOVE:
+      return {
+        ...state,
+        list: map(
+          state.list,
+          (item, i) =>
+            item.active
+              ? {
+                  ...item,
+                  nodes: filter(item.nodes, n => !n.active)
                 }
               : item
         )

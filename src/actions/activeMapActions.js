@@ -4,7 +4,8 @@ import {
   ACTIVE_MAP_NODE_ADD,
   NEW_NODE_TITLE,
   ACTIVE_MAP_NODE_ACTIVE,
-  ACTIVE_MAP_NODE_TITLE_CHANGE
+  ACTIVE_MAP_NODE_TITLE_CHANGE,
+  ACTIVE_MAP_NODE_REMOVE
 } from "./constants";
 
 export const newNode = () => (dispatch, getState) => {
@@ -37,15 +38,14 @@ export const setActiveNode = index => ({
   payload: { index }
 });
 
-export const activeNodeChangeTitle = title => (dispatch, getState) => {
-  dispatch({
-    type: ACTIVE_MAP_NODE_TITLE_CHANGE,
-    payload: {
-      index: findIndex(
-        find(getState().maps.list, m => m.active).nodes,
-        n => n.active
-      ),
-      title
-    }
-  });
-};
+export const activeNodeChangeTitle = title => ({
+  type: ACTIVE_MAP_NODE_TITLE_CHANGE,
+  payload: {
+    title
+  }
+});
+
+export const removeNode = () => ({
+  type: ACTIVE_MAP_NODE_REMOVE,
+  payload: {}
+});

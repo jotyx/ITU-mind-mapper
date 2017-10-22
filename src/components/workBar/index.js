@@ -7,9 +7,9 @@ import Menu from "./Menu";
 import Icon from "./Icon";
 
 import { setDialog } from "../../actions/appActions";
-import { newNode } from "../../actions/activeMapActions";
+import { newNode, removeNode } from "../../actions/activeMapActions";
 
-const WorkBar = ({ setDialog, newNode, activeNode }) => {
+const WorkBar = ({ setDialog, newNode, activeNode, removeNode }) => {
   return (
     <div className="work-bar">
       <Menu />
@@ -51,7 +51,7 @@ const WorkBar = ({ setDialog, newNode, activeNode }) => {
         <Icon
           iconType="fa-trash-o"
           tooltipLabel="Odstranit uzel"
-          onClickAction={() => null}
+          onClickAction={() => removeNode()}
         />
       )}
       <div className="vertical-line" />
@@ -96,6 +96,6 @@ export default compose(
     ({ maps: { list } }) => ({
       activeNode: find(find(list, m => m.active).nodes, n => n.active)
     }),
-    { setDialog, newNode }
+    { setDialog, newNode, removeNode }
   )
 )(WorkBar);
