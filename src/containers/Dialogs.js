@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import RenameMap from "../components/dialogs/RenameMap";
 import Info from "../components/dialogs/Info";
+import ActiveNodeTitleChange from "../components/dialogs/ActiveNodeTitleChange";
 
 import { closeDialog } from "../actions/appActions";
 
@@ -11,6 +12,7 @@ const Dialogs = props => {
     <div>
       <RenameMap {...props} />
       <Info {...props} />
+      <ActiveNodeTitleChange {...props} />
     </div>
   );
 };

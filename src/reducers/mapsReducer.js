@@ -71,6 +71,26 @@ const reducer = (state = initialState, action) => {
               : item
         )
       };
+    case c.ACTIVE_MAP_NODE_TITLE_CHANGE:
+      return {
+        ...state,
+        list: map(
+          state.list,
+          (item, i) =>
+            item.active
+              ? {
+                  ...item,
+                  nodes: map(
+                    item.nodes,
+                    (n, i) =>
+                      i === action.payload.index
+                        ? { ...n, title: action.payload.title }
+                        : n
+                  )
+                }
+              : item
+        )
+      };
     default:
       return state;
   }

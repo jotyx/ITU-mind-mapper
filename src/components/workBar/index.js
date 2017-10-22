@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose } from "recompose";
+import { find } from "lodash";
 
 import Menu from "./Menu";
 import Icon from "./Icon";
@@ -8,7 +9,7 @@ import Icon from "./Icon";
 import { setDialog } from "../../actions/appActions";
 import { newNode } from "../../actions/activeMapActions";
 
-const WorkBar = ({ setDialog, newNode }) => {
+const WorkBar = ({ setDialog, newNode, activeNode }) => {
   return (
     <div className="work-bar">
       <Menu />
@@ -17,32 +18,42 @@ const WorkBar = ({ setDialog, newNode }) => {
         tooltipLabel="Přidat uzel"
         onClickAction={() => newNode()}
       />
-      <Icon
-        iconType="fa-files-o"
-        tooltipLabel="Kopírovat uzel"
-        onClickAction={() => null}
-      />
-      <div className="vertical-line" />
-      <Icon
-        iconType="fa-paint-brush"
-        tooltipLabel="Změnit barvu uzlu"
-        onClickAction={() => null}
-      />
-      <Icon
-        iconType="fa-font"
-        tooltipLabel="Změnit font"
-        onClickAction={() => null}
-      />
-      <Icon
-        iconType="fa-pencil-square-o"
-        tooltipLabel="Upravit uzel"
-        onClickAction={() => null}
-      />
-      <Icon
-        iconType="fa-trash-o"
-        tooltipLabel="Odstranit uzel"
-        onClickAction={() => null}
-      />
+      {activeNode && <div className="vertical-line" />}
+      {activeNode && (
+        <Icon
+          iconType="fa-files-o"
+          tooltipLabel="Kopírovat uzel"
+          onClickAction={() => null}
+        />
+      )}
+      {activeNode && (
+        <Icon
+          iconType="fa-paint-brush"
+          tooltipLabel="Změnit barvu uzlu"
+          onClickAction={() => null}
+        />
+      )}
+      {activeNode && (
+        <Icon
+          iconType="fa-font"
+          tooltipLabel="Změnit font"
+          onClickAction={() => null}
+        />
+      )}
+      {activeNode && (
+        <Icon
+          iconType="fa-pencil-square-o"
+          tooltipLabel="Upravit uzel"
+          onClickAction={() => setDialog("ActiveNodeTitleChange", activeNode)}
+        />
+      )}
+      {activeNode && (
+        <Icon
+          iconType="fa-trash-o"
+          tooltipLabel="Odstranit uzel"
+          onClickAction={() => null}
+        />
+      )}
       <div className="vertical-line" />
       <Icon iconType="fa-undo" tooltipLabel="Zpět" onClickAction={() => null} />
       <Icon
@@ -80,4 +91,11 @@ const WorkBar = ({ setDialog, newNode }) => {
   );
 };
 
-export default compose(connect(null, { setDialog, newNode }))(WorkBar);
+export default compose(
+  connect(
+    ({ maps: { list } }) => ({
+      activeNode: find(find(list, m => m.active).nodes, n => n.active)
+    }),
+    { setDialog, newNode }
+  )
+)(WorkBar);
