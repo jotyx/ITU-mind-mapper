@@ -13,7 +13,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         list: map(
           state.list,
-          (item, i) =>
+          item =>
             item.name === action.payload.name
               ? { ...item, active: true }
               : { ...item, active: false }
@@ -27,14 +27,14 @@ const reducer = (state = initialState, action) => {
     case c.MAPS_REMOVE:
       return {
         ...state,
-        list: filter(state.list, (item, i) => item.name !== action.payload.name)
+        list: filter(state.list, item => item.name !== action.payload.name)
       };
     case c.MAPS_RENAME:
       return {
         ...state,
         list: map(
           state.list,
-          (item, i) =>
+          item =>
             item.name === action.payload.oldName
               ? { ...item, name: action.payload.newName }
               : item
@@ -45,7 +45,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         list: map(
           state.list,
-          (item, i) =>
+          item =>
             item.active
               ? { ...item, nodes: [...item.nodes, action.payload.node] }
               : item
@@ -56,7 +56,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         list: map(
           state.list,
-          (item, i) =>
+          item =>
             item.active
               ? {
                   ...item,
@@ -76,7 +76,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         list: map(
           state.list,
-          (item, i) =>
+          item =>
             item.active
               ? {
                   ...item,
@@ -93,11 +93,28 @@ const reducer = (state = initialState, action) => {
         ...state,
         list: map(
           state.list,
-          (item, i) =>
+          item =>
             item.active
               ? {
                   ...item,
                   nodes: filter(item.nodes, n => !n.active)
+                }
+              : item
+        )
+      };
+    case c.ACTIVE_MAP_NODE_COLOR_CHANGE:
+      return {
+        ...state,
+        list: map(
+          state.list,
+          item =>
+            item.active
+              ? {
+                  ...item,
+                  nodes: map(
+                    item.nodes,
+                    n => (n.active ? { ...n, color: action.payload.color } : n)
+                  )
                 }
               : item
         )

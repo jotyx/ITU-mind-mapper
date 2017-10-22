@@ -30,7 +30,8 @@ const WorkBar = ({ setDialog, newNode, activeNode, removeNode }) => {
         <Icon
           iconType="fa-paint-brush"
           tooltipLabel="Změnit barvu uzlu"
-          onClickAction={() => null}
+          onClickAction={() =>
+            setDialog("ActiveNodeColorChange", { color: activeNode.color })}
         />
       )}
       {activeNode && (

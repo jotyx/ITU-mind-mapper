@@ -1,11 +1,12 @@
-import { find, maxBy, isEmpty, findIndex } from "lodash";
+import { find, maxBy, isEmpty } from "lodash";
 
 import {
   ACTIVE_MAP_NODE_ADD,
   NEW_NODE_TITLE,
   ACTIVE_MAP_NODE_ACTIVE,
   ACTIVE_MAP_NODE_TITLE_CHANGE,
-  ACTIVE_MAP_NODE_REMOVE
+  ACTIVE_MAP_NODE_REMOVE,
+  ACTIVE_MAP_NODE_COLOR_CHANGE
 } from "./constants";
 
 export const newNode = () => (dispatch, getState) => {
@@ -20,12 +21,12 @@ export const newNode = () => (dispatch, getState) => {
     payload: {
       node: {
         title: NEW_NODE_TITLE,
-        color: "white",
+        color: "#FFFFFF",
         x: 10,
         y: yPos,
         width: 200,
         height: 100,
-        titleColor: "black",
+        titleColor: "#111111",
         fontSize: 20,
         active: false
       }
@@ -48,4 +49,11 @@ export const activeNodeChangeTitle = title => ({
 export const removeNode = () => ({
   type: ACTIVE_MAP_NODE_REMOVE,
   payload: {}
+});
+
+export const activeNodeChangeColor = color => ({
+  type: ACTIVE_MAP_NODE_COLOR_CHANGE,
+  payload: {
+    color
+  }
 });

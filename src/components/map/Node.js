@@ -6,7 +6,7 @@ const Node = ({ node, onClickAction }) => {
     <div
       className={classNames("node", { active: node.active })}
       style={{
-        color: node.color,
+        backgroundColor: node.color,
         position: "absolute",
         left: node.x,
         top: node.y,
