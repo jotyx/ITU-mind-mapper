@@ -27,3 +27,24 @@
 .hidden {
     display: none;
 }
+
+.flex-row {
+    width: 100%;
+    display: flex;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.margin {
+    &-bottom {
+        margin-bottom: 1em;
+    }
+}

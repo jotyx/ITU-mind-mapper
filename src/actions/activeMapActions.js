@@ -4,9 +4,8 @@ import {
   ACTIVE_MAP_NODE_ADD,
   NEW_NODE_TITLE,
   ACTIVE_MAP_NODE_ACTIVE,
-  ACTIVE_MAP_NODE_TITLE_CHANGE,
-  ACTIVE_MAP_NODE_REMOVE,
-  ACTIVE_MAP_NODE_COLOR_CHANGE
+  ACTIVE_MAP_NODE_CHANGE,
+  ACTIVE_MAP_NODE_REMOVE
 } from "./constants";
 
 export const newNode = () => (dispatch, getState) => {
@@ -40,7 +39,7 @@ export const setActiveNode = index => ({
 });
 
 export const activeNodeChangeTitle = title => ({
-  type: ACTIVE_MAP_NODE_TITLE_CHANGE,
+  type: ACTIVE_MAP_NODE_CHANGE,
   payload: {
     title
   }
@@ -51,9 +50,10 @@ export const removeNode = () => ({
   payload: {}
 });
 
-export const activeNodeChangeColor = color => ({
-  type: ACTIVE_MAP_NODE_COLOR_CHANGE,
+export const activeNodeChangeColor = (color, titleColor) => ({
+  type: ACTIVE_MAP_NODE_CHANGE,
   payload: {
-    color
+    color,
+    titleColor
   }
 });

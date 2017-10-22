@@ -71,23 +71,6 @@ const reducer = (state = initialState, action) => {
               : item
         )
       };
-    case c.ACTIVE_MAP_NODE_TITLE_CHANGE:
-      return {
-        ...state,
-        list: map(
-          state.list,
-          item =>
-            item.active
-              ? {
-                  ...item,
-                  nodes: map(
-                    item.nodes,
-                    n => (n.active ? { ...n, title: action.payload.title } : n)
-                  )
-                }
-              : item
-        )
-      };
     case c.ACTIVE_MAP_NODE_REMOVE:
       return {
         ...state,
@@ -102,7 +85,7 @@ const reducer = (state = initialState, action) => {
               : item
         )
       };
-    case c.ACTIVE_MAP_NODE_COLOR_CHANGE:
+    case c.ACTIVE_MAP_NODE_CHANGE:
       return {
         ...state,
         list: map(
@@ -113,7 +96,7 @@ const reducer = (state = initialState, action) => {
                   ...item,
                   nodes: map(
                     item.nodes,
-                    n => (n.active ? { ...n, color: action.payload.color } : n)
+                    n => (n.active ? { ...n, ...action.payload } : n)
                   )
                 }
               : item
