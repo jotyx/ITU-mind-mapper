@@ -1,5 +1,36 @@
 .map {
     width: 100%;
-    overflow: scroll;
     height: calc(100vh - #{$height-work-bar});
+    overflow: scroll;
+    position: relative;
+
+    .node {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border: 1px solid $c-black;
+        border-radius: 10px;
+        cursor: pointer;
+
+        &:hover {
+            // border: 3px solid $c-black;
+            -webkit-box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.57);
+            -moz-box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.57);
+            box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.57);
+        }
+
+        &.active {
+            border: 3px solid $c-black;
+        }
+
+        .title {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+    }
 }

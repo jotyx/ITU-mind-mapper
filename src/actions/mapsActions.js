@@ -32,7 +32,8 @@ export const newMap = () => (dispatch, getState) => {
     type: MAPS_ADD,
     payload: {
       map: {
-        name
+        name,
+        nodes: []
       }
     }
   });

@@ -6,15 +6,16 @@ import Menu from "./Menu";
 import Icon from "./Icon";
 
 import { setDialog } from "../../actions/appActions";
+import { newNode } from "../../actions/activeMapActions";
 
-const WorkBar = ({ setDialog }) => {
+const WorkBar = ({ setDialog, newNode }) => {
   return (
     <div className="work-bar">
       <Menu />
       <Icon
         iconType="fa-plus-square-o"
         tooltipLabel="Přidat uzel"
-        onClickAction={() => null}
+        onClickAction={() => newNode()}
       />
       <Icon
         iconType="fa-files-o"
@@ -79,4 +80,4 @@ const WorkBar = ({ setDialog }) => {
   );
 };
 
-export default compose(connect(null, { setDialog }))(WorkBar);
+export default compose(connect(null, { setDialog, newNode }))(WorkBar);
