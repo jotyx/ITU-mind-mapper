@@ -3664,6 +3664,32 @@ tbody .md-table-row {
       justify-content: center;
       align-items: center;
       overflow: hidden; }
+      .map .node .title.font-arial {
+        font-family: Arial, Helvetica, sans-serif; }
+      .map .node .title.font-arialBlack {
+        font-family: "Arial Black", Gadget, sans-serif; }
+      .map .node .title.font-comic {
+        font-family: "Comic Sans MS", cursive, sans-serif; }
+      .map .node .title.font-courier {
+        font-family: "Courier New", Courier, monospace; }
+      .map .node .title.font-georgia {
+        font-family: Georgia, serif; }
+      .map .node .title.font-impact {
+        font-family: Impact, Charcoal, sans-serif; }
+      .map .node .title.font-lucida {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; }
+      .map .node .title.font-lucidaConsole {
+        font-family: "Lucida Console", Monaco, monospace; }
+      .map .node .title.font-palatino {
+        font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif; }
+      .map .node .title.font-tahoma {
+        font-family: Tahoma, Geneva, sans-serif; }
+      .map .node .title.font-times {
+        font-family: "Times New Roman", Times, serif; }
+      .map .node .title.font-trebuchet {
+        font-family: "Trebuchet MS", Helvetica, sans-serif; }
+      .map .node .title.font-verdana {
+        font-family: Verdana, Geneva, sans-serif; }
 
 .dialog-color-change {
   width: 100%;

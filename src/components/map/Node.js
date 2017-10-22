@@ -17,7 +17,7 @@ const Node = ({ node, onClickAction }) => {
       onClick={() => onClickAction()}
     >
       <div
-        className="title"
+        className={`title font-${node.font}`}
         style={{
           color: node.titleColor,
           fontSize: node.fontSize

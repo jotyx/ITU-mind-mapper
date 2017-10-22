@@ -42,7 +42,11 @@ const WorkBar = ({ setDialog, newNode, activeNode, removeNode }) => {
         <Icon
           iconType="fa-font"
           tooltipLabel="Změnit font"
-          onClickAction={() => null}
+          onClickAction={() =>
+            setDialog("ActiveNodeFontChange", {
+              font: activeNode.font,
+              fontSize: activeNode.fontSize
+            })}
         />
       )}
       {activeNode && (

@@ -27,6 +27,7 @@ export const newNode = () => (dispatch, getState) => {
         y: yPos,
         width: 200,
         height: 100,
+        font: "arial",
         fontSize: 20,
         active: false
       }
@@ -57,5 +58,13 @@ export const activeNodeChangeColor = (color, borderColor, titleColor) => ({
     color,
     borderColor,
     titleColor
+  }
+});
+
+export const activeNodeChangeFont = (font, fontSize) => ({
+  type: ACTIVE_MAP_NODE_CHANGE,
+  payload: {
+    font,
+    fontSize
   }
 });
