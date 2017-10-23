@@ -1,4 +1,4 @@
-// utils here
+import { find } from "lodash";
 
 export const downloadFile = (fileName, data, type) => {
   const blob = new Blob([data], { type });
@@ -13,4 +13,11 @@ export const downloadFile = (fileName, data, type) => {
     a.click();
     document.body.removeChild(a);
   }
+};
+
+export const coordinatesInsideNode = (x, y, map) => {
+  return find(
+    map.nodes,
+    n => x >= n.x && x <= n.x + n.width && y >= n.y && y <= n.y + n.height
+  );
 };
