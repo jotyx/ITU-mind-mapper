@@ -30,8 +30,8 @@ export const newNode = () => (dispatch, getState) => {
         y: yPos,
         width: 200,
         height: 100,
-        font: "arial",
-        fontSize: 20,
+        font: find(getState().maps.list, m => m.active).defaultNodeFont,
+        fontSize: find(getState().maps.list, m => m.active).defaultNodeFontSize,
         active: false
       }
     }
@@ -82,5 +82,16 @@ export const defaultNodeChangeColor = (
     defaultNodeColor,
     defaultNodeBorderColor,
     defaultNodeTitleColor
+  }
+});
+
+export const defaultNodeChangeFont = (
+  defaultNodeFont,
+  defaultNodeFontSize
+) => ({
+  type: ACTIVE_MAP_CHANGE,
+  payload: {
+    defaultNodeFont,
+    defaultNodeFontSize
   }
 });

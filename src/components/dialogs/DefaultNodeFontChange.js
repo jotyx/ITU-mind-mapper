@@ -9,14 +9,14 @@ import DialogContainer from "./DialogContainer";
 import Select from "../form/Select";
 import * as Validation from "../form/Validation";
 
-import { activeNodeChangeFont } from "../../actions/activeMapActions";
+import { defaultNodeChangeFont } from "../../actions/activeMapActions";
 
 import { fonts, fontSizes } from "../../enums";
 
-const ActiveNodeFontChange = ({ handleSubmit, setDialog, initialValues }) => (
+const DefaultNodeFontChange = ({ handleSubmit, setDialog, initialValues }) => (
   <DialogContainer
-    title="Změnit font"
-    name="ActiveNodeFontChange"
+    title="Změnit výchozí font uzlů"
+    name="DefaultNodeFontChange"
     handleSubmit={handleSubmit}
     submitLabel="Změnit"
   >
@@ -43,17 +43,18 @@ const ActiveNodeFontChange = ({ handleSubmit, setDialog, initialValues }) => (
 
 export default compose(
   connect(({ app: { dialog: { data } } }) => ({ initialValues: data }), {
-    activeNodeChangeFont
+    defaultNodeChangeFont
   }),
   withRouter,
   withHandlers({
     onSubmit: dialog => async (formData, dispatch, props) => {
-      const { activeNodeChangeFont } = props;
-      activeNodeChangeFont(formData.font, formData.fontSize);
+      const { defaultNodeChangeFont } = props;
+      console.log(formData.font, formData.fontSize);
+      defaultNodeChangeFont(formData.font, formData.fontSize);
       dialog.closeDialog();
     }
   }),
   reduxForm({
-    form: "activeNodeFontChangeForm"
+    form: "defaultNodeFontChangeForm"
   })
-)(ActiveNodeFontChange);
+)(DefaultNodeFontChange);

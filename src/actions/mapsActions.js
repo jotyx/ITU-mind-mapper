@@ -13,6 +13,11 @@ export const setActiveMap = name => ({
   payload: { name }
 });
 
+export const addMap = map => ({
+  type: MAPS_ADD,
+  payload: { map }
+});
+
 export const newMap = () => (dispatch, getState) => {
   const maxNum = max(
     map(
@@ -28,18 +33,17 @@ export const newMap = () => (dispatch, getState) => {
       ? `${NEW_MAP_NAME} 1`
       : `${NEW_MAP_NAME} ${maxNum + 1}`;
 
-  dispatch({
-    type: MAPS_ADD,
-    payload: {
-      map: {
-        name,
-        defaultNodeColor: "#FFFFFF",
-        defaultNodeBorderColor: "#111111",
-        defaultNodeTitleColor: "#111111",
-        nodes: []
-      }
-    }
-  });
+  dispatch(
+    addMap({
+      name,
+      defaultNodeColor: "#FFFFFF",
+      defaultNodeBorderColor: "#111111",
+      defaultNodeTitleColor: "#111111",
+      defaultNodeFont: "arial",
+      defaultNodeFontSize: 20,
+      nodes: []
+    })
+  );
 
   dispatch(setActiveMap(name));
 };
