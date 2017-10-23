@@ -33,6 +33,9 @@ export const newMap = () => (dispatch, getState) => {
     payload: {
       map: {
         name,
+        defaultNodeColor: "#FFFFFF",
+        defaultNodeBorderColor: "#111111",
+        defaultNodeTitleColor: "#111111",
         nodes: []
       }
     }

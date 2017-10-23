@@ -3,7 +3,7 @@ import { map, filter } from "lodash";
 import * as c from "../actions/constants";
 
 const initialState = {
-  list: [{ name: `${c.NEW_MAP_NAME} 1`, active: true, nodes: [] }]
+  list: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -100,6 +100,14 @@ const reducer = (state = initialState, action) => {
                   )
                 }
               : item
+        )
+      };
+    case c.ACTIVE_MAP_CHANGE:
+      return {
+        ...state,
+        list: map(
+          state.list,
+          item => (item.active ? { ...item, ...action.payload } : item)
         )
       };
     default:

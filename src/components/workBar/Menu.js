@@ -47,6 +47,19 @@ const Menu = ({ newMap, setDialog, list }) => {
           Přejmenovat
         </MenuItem>
         <MenuItem eventKey="5">Exportovat do obrázku</MenuItem>
+        <MenuItem divider />
+        <MenuItem
+          eventKey="6"
+          onClick={() =>
+            setDialog("DefaultNodeColorChange", {
+              color: activeMap.defaultNodeColor,
+              borderColor: activeMap.defaultNodeBorderColor,
+              titleColor: activeMap.defaultNodeTitleColor
+            })}
+        >
+          Změnit výchozí barvu uzlů
+        </MenuItem>
+        <MenuItem eventKey="7">Změnit výchozí font uzlů</MenuItem>
       </DropdownButton>
       <ReactTooltip
         className="icon-tooltip"

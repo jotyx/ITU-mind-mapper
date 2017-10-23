@@ -8,15 +8,15 @@ import classNames from "classnames";
 
 import DialogContainer from "./DialogContainer";
 
-import { activeNodeChangeColor } from "../../actions/activeMapActions";
+import { defaultNodeChangeColor } from "../../actions/activeMapActions";
 import { setDialog } from "../../actions/appActions";
 
 import { colors } from "../../enums";
 
-const ActiveNodeColorChange = ({ handleSubmit, color, data, setDialog }) => (
+const DefaultNodeColorChange = ({ handleSubmit, color, data, setDialog }) => (
   <DialogContainer
-    title="Změnit barvu uzlu"
-    name="ActiveNodeColorChange"
+    title="Změnit výchozí barvu uzlů"
+    name="DefaultNodeColorChange"
     handleSubmit={handleSubmit}
     submitLabel="Změnit"
   >
@@ -30,7 +30,7 @@ const ActiveNodeColorChange = ({ handleSubmit, color, data, setDialog }) => (
               className={classNames("btn-color", { active: c === data.color })}
               style={{ backgroundColor: c }}
               onClick={() =>
-                setDialog("ActiveNodeColorChange", {
+                setDialog("DefaultNodeColorChange", {
                   color: c,
                   titleColor: data.titleColor,
                   borderColor: data.borderColor
@@ -49,7 +49,7 @@ const ActiveNodeColorChange = ({ handleSubmit, color, data, setDialog }) => (
               })}
               style={{ backgroundColor: c }}
               onClick={() =>
-                setDialog("ActiveNodeColorChange", {
+                setDialog("DefaultNodeColorChange", {
                   borderColor: c,
                   color: data.color,
                   titleColor: data.titleColor
@@ -68,7 +68,7 @@ const ActiveNodeColorChange = ({ handleSubmit, color, data, setDialog }) => (
               })}
               style={{ backgroundColor: c }}
               onClick={() =>
-                setDialog("ActiveNodeColorChange", {
+                setDialog("DefaultNodeColorChange", {
                   titleColor: c,
                   color: data.color,
                   borderColor: data.borderColor
@@ -87,19 +87,19 @@ export default compose(
       data
     }),
     {
-      activeNodeChangeColor,
+      defaultNodeChangeColor,
       setDialog
     }
   ),
   withRouter,
   withHandlers({
     onSubmit: dialog => async (formData, dispatch, props) => {
-      const { activeNodeChangeColor, data } = props;
-      activeNodeChangeColor(data.color, data.borderColor, data.titleColor);
+      const { defaultNodeChangeColor, data } = props;
+      defaultNodeChangeColor(data.color, data.borderColor, data.titleColor);
       dialog.closeDialog();
     }
   }),
   reduxForm({
-    form: "activeNodeColorChangeForm"
+    form: "defaultNodeColorChangeForm"
   })
-)(ActiveNodeColorChange);
+)(DefaultNodeColorChange);

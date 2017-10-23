@@ -5,7 +5,8 @@ import {
   NEW_NODE_TITLE,
   ACTIVE_MAP_NODE_ACTIVE,
   ACTIVE_MAP_NODE_CHANGE,
-  ACTIVE_MAP_NODE_REMOVE
+  ACTIVE_MAP_NODE_REMOVE,
+  ACTIVE_MAP_CHANGE
 } from "./constants";
 
 export const newNode = () => (dispatch, getState) => {
@@ -20,9 +21,11 @@ export const newNode = () => (dispatch, getState) => {
     payload: {
       node: {
         title: NEW_NODE_TITLE,
-        color: "#FFFFFF",
-        borderColor: "#111111",
-        titleColor: "#111111",
+        color: find(getState().maps.list, m => m.active).defaultNodeColor,
+        borderColor: find(getState().maps.list, m => m.active)
+          .defaultNodeBorderColor,
+        titleColor: find(getState().maps.list, m => m.active)
+          .defaultNodeTitleColor,
         x: 10,
         y: yPos,
         width: 200,
@@ -66,5 +69,18 @@ export const activeNodeChangeFont = (font, fontSize) => ({
   payload: {
     font,
     fontSize
+  }
+});
+
+export const defaultNodeChangeColor = (
+  defaultNodeColor,
+  defaultNodeBorderColor,
+  defaultNodeTitleColor
+) => ({
+  type: ACTIVE_MAP_CHANGE,
+  payload: {
+    defaultNodeColor,
+    defaultNodeBorderColor,
+    defaultNodeTitleColor
   }
 });

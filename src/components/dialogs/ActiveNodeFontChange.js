@@ -1,10 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose, withHandlers } from "recompose";
-import { reduxForm, Field, SubmissionError } from "redux-form";
+import { reduxForm, Field } from "redux-form";
 import { withRouter } from "react-router-dom";
 import { isEmpty } from "lodash";
-import classNames from "classnames";
 
 import DialogContainer from "./DialogContainer";
 import Select from "../form/Select";
@@ -57,7 +56,6 @@ const optionsSize = [
 const ActiveNodeFontChange = ({
   handleSubmit,
   color,
-  data,
   setDialog,
   initialValues
 }) => (
@@ -89,13 +87,11 @@ const ActiveNodeFontChange = ({
 );
 
 export default compose(
-  connect(({ app: { dialog: { data } } }) => ({ initialValues: data }), {
-    activeNodeChangeFont
-  }),
+  connect(null, { activeNodeChangeFont }),
   withRouter,
   withHandlers({
     onSubmit: dialog => async (formData, dispatch, props) => {
-      const { activeNodeChangeFont, data } = props;
+      const { activeNodeChangeFont } = props;
       activeNodeChangeFont(formData.font, formData.fontSize);
       dialog.closeDialog();
     }
