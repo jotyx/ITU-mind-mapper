@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import { compose, withHandlers, withState } from "recompose";
 import { reduxForm } from "redux-form";
 import { withRouter } from "react-router-dom";
