@@ -49,12 +49,12 @@ export default compose(
   withHandlers({
     onSubmit: dialog => async (formData, dispatch, props) => {
       const { defaultNodeChangeFont } = props;
-      console.log(formData.font, formData.fontSize);
       defaultNodeChangeFont(formData.font, formData.fontSize);
       dialog.closeDialog();
     }
   }),
   reduxForm({
-    form: "defaultNodeFontChangeForm"
+    form: "defaultNodeFontChangeForm",
+    enableReinitialize: true
   })
 )(DefaultNodeFontChange);

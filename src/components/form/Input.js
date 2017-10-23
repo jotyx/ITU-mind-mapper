@@ -1,10 +1,19 @@
 import React from "react";
 
-import { FormControl } from "react-bootstrap";
+import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-const Input = ({ meta: { touched, error }, input, placeholder }) => (
+const Input = ({
+  meta: { touched, error },
+  input,
+  placeholder,
+  type,
+  label
+}) => (
   <div>
-    <FormControl {...input} type="text" placeholder={placeholder} />
+    <FormGroup controlId="formControlsSelect">
+      {label && <ControlLabel>{label}</ControlLabel>}
+      <FormControl {...input} type={type || "text"} placeholder={placeholder} />
+    </FormGroup>
     {touched && error ? <span className="error-text">{error}</span> : <div />}
   </div>
 );

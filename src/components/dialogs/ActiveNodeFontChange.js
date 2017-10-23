@@ -54,6 +54,7 @@ export default compose(
     }
   }),
   reduxForm({
-    form: "activeNodeFontChangeForm"
+    form: "activeNodeFontChangeForm",
+    enableReinitialize: true
   })
 )(ActiveNodeFontChange);

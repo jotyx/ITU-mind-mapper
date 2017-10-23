@@ -8,6 +8,7 @@ import ActiveNodeColorChange from "../components/dialogs/ActiveNodeColorChange";
 import ActiveNodeFontChange from "../components/dialogs/ActiveNodeFontChange";
 import DefaultNodeColorChange from "../components/dialogs/DefaultNodeColorChange";
 import DefaultNodeFontChange from "../components/dialogs/DefaultNodeFontChange";
+import DefaultNodeSizeChange from "../components/dialogs/DefaultNodeSizeChange";
 
 import { closeDialog } from "../actions/appActions";
 
@@ -21,6 +22,7 @@ const Dialogs = props => {
       <ActiveNodeFontChange {...props} />
       <DefaultNodeColorChange {...props} />
       <DefaultNodeFontChange {...props} />
+      <DefaultNodeSizeChange {...props} />
     </div>
   );
 };

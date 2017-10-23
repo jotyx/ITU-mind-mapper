@@ -10,9 +10,11 @@ import {
 } from "./constants";
 
 export const newNode = () => (dispatch, getState) => {
-  const yPos = !isEmpty(find(getState().maps.list, m => m.active).nodes)
-    ? maxBy(find(getState().maps.list, m => m.active).nodes, n => n.y).y +
-      maxBy(find(getState().maps.list, m => m.active).nodes, n => n.y).height +
+  const activeMap = find(getState().maps.list, m => m.active);
+
+  const yPos = !isEmpty(activeMap.nodes)
+    ? maxBy(activeMap.nodes, n => n.y).y +
+      maxBy(activeMap.nodes, n => n.y).height +
       10
     : 10;
 
@@ -21,17 +23,17 @@ export const newNode = () => (dispatch, getState) => {
     payload: {
       node: {
         title: NEW_NODE_TITLE,
-        color: find(getState().maps.list, m => m.active).defaultNodeColor,
-        borderColor: find(getState().maps.list, m => m.active)
+        color: activeMap.defaultNodeColor,
+        borderColor: activeMap
           .defaultNodeBorderColor,
-        titleColor: find(getState().maps.list, m => m.active)
+        titleColor: activeMap
           .defaultNodeTitleColor,
         x: 10,
         y: yPos,
-        width: 200,
-        height: 100,
-        font: find(getState().maps.list, m => m.active).defaultNodeFont,
-        fontSize: find(getState().maps.list, m => m.active).defaultNodeFontSize,
+        width: activeMap.defaultNodeWidth,
+        height: activeMap.defaultNodeHeight,
+        font: activeMap.defaultNodeFont,
+        fontSize: activeMap.defaultNodeFontSize,
         active: false
       }
     }
@@ -93,5 +95,13 @@ export const defaultNodeChangeFont = (
   payload: {
     defaultNodeFont,
     defaultNodeFontSize
+  }
+});
+
+export const defaultNodeChangeSize = (defaultNodeWidth, defaultNodeHeight) => ({
+  type: ACTIVE_MAP_CHANGE,
+  payload: {
+    defaultNodeWidth,
+    defaultNodeHeight
   }
 });

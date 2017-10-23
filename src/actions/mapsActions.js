@@ -40,7 +40,9 @@ export const newMap = () => (dispatch, getState) => {
       defaultNodeBorderColor: "#111111",
       defaultNodeTitleColor: "#111111",
       defaultNodeFont: "arial",
-      defaultNodeFontSize: 20,
+      defaultNodeFontSize: "20",
+      defaultNodeWidth: 200,
+      defaultNodeHeight: 100,
       nodes: []
     })
   );

@@ -69,6 +69,16 @@ const Menu = ({ newMap, setDialog, list }) => {
         >
           Změnit výchozí font uzlů
         </MenuItem>
+        <MenuItem
+          eventKey="8"
+          onClick={() =>
+            setDialog("DefaultNodeSizeChange", {
+              defaultNodeWidth: activeMap.defaultNodeWidth,
+              defaultNodeHeight: activeMap.defaultNodeHeight
+            })}
+        >
+          Změnit výchozí velikost uzlů
+        </MenuItem>
       </DropdownButton>
       <ReactTooltip
         className="icon-tooltip"
