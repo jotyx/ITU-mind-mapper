@@ -28,7 +28,7 @@ const Help = ({ handleSubmit, data, showLabel, setShowLabel }) => (
       <Carousel interval={null} indicators={false} controls={showLabel}>
         {map(helpData, (item, i) => (
           <Carousel.Item key={i}>
-            <img width="100%" height="auto" src={item.image} />
+            <img width="100%" height="auto" alt="" src={item.image} />
             {showLabel && (
               <Carousel.Caption>
                 <h3>{item.title}</h3>

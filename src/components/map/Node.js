@@ -20,7 +20,7 @@ const Node = ({ node, onClickAction }) => {
         className={`title font-${node.font}`}
         style={{
           color: node.titleColor,
-          fontSize: node.fontSize
+          fontSize: Number(node.fontSize)
         }}
       >
         {node.title}
