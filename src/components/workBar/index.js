@@ -90,11 +90,7 @@ const WorkBar = ({ setDialog, newNode, activeNode, removeNode }) => {
       <Icon
         iconType="fa-question-circle"
         tooltipLabel="Nápověda"
-        onClickAction={() =>
-          setDialog("Info", {
-            title: "Nápověda",
-            text: "Nějaká super nápověda."
-          })}
+        onClickAction={() => setDialog("Help")}
       />
     </div>
   );

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import RenameMap from "../components/dialogs/RenameMap";
 import Info from "../components/dialogs/Info";
+import Help from "../components/dialogs/Help";
 import ActiveNodeTitleChange from "../components/dialogs/ActiveNodeTitleChange";
 import ActiveNodeColorChange from "../components/dialogs/ActiveNodeColorChange";
 import ActiveNodeFontChange from "../components/dialogs/ActiveNodeFontChange";
@@ -17,6 +18,7 @@ const Dialogs = props => {
     <div>
       <RenameMap {...props} />
       <Info {...props} />
+      <Help {...props} />
       <ActiveNodeTitleChange {...props} />
       <ActiveNodeColorChange {...props} />
       <ActiveNodeFontChange {...props} />
