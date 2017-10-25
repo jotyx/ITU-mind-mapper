@@ -11,6 +11,8 @@ import {
   ACTIVE_MAP_REDO
 } from "./constants";
 
+/* DEFAULT */
+
 export const defaultNodeChangeColor = (
   defaultNodeColor,
   defaultNodeBorderColor,
@@ -77,10 +79,8 @@ export const newNode = () => (dispatch, getState) => {
       node: {
         title: NEW_NODE_TITLE,
         color: activeMap.defaultNodeColor,
-        borderColor: activeMap
-          .defaultNodeBorderColor,
-        titleColor: activeMap
-          .defaultNodeTitleColor,
+        borderColor: activeMap.defaultNodeBorderColor,
+        titleColor: activeMap.defaultNodeTitleColor,
         x: 10,
         y: yPos,
         width: activeMap.defaultNodeWidth,
@@ -119,5 +119,12 @@ export const activeNodeChangeFont = (font, fontSize) => ({
   payload: {
     font,
     fontSize
+  }
+});
+
+export const changeZoom = zoom => ({
+  type: ACTIVE_MAP_CHANGE,
+  payload: {
+    zoom
   }
 });

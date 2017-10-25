@@ -11,7 +11,8 @@ import {
   newNode,
   removeNode,
   undo,
-  redo
+  redo,
+  changeZoom
 } from "../../actions/activeMapActions";
 
 const WorkBar = ({
@@ -21,7 +22,8 @@ const WorkBar = ({
   removeNode,
   undo,
   redo,
-  activeMap
+  activeMap,
+  changeZoom
 }) => {
   return (
     <div className="work-bar">
@@ -93,17 +95,19 @@ const WorkBar = ({
       <Icon
         iconType="fa-search-plus"
         tooltipLabel="Přiblížit"
-        onClickAction={() => null}
+        onClickAction={() =>
+          activeMap.zoom < 500 && changeZoom(activeMap.zoom + 25)}
       />
       <Icon
         iconType="fa-search"
         tooltipLabel="Původní přiblížení"
-        onClickAction={() => null}
+        onClickAction={() => changeZoom(100)}
       />
       <Icon
         iconType="fa-search-minus"
         tooltipLabel="Oddálit"
-        onClickAction={() => null}
+        onClickAction={() =>
+          activeMap.zoom > 25 && changeZoom(activeMap.zoom - 25)}
       />
       <div className="vertical-line" />
       <Icon
@@ -121,6 +125,6 @@ export default compose(
       activeMap: find(list, m => m.active),
       activeNode: find(find(list, m => m.active).nodes, n => n.active)
     }),
-    { setDialog, newNode, removeNode, undo, redo }
+    { setDialog, newNode, removeNode, undo, redo, changeZoom }
   )
 )(WorkBar);

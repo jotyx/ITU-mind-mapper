@@ -43,6 +43,7 @@ export const newMap = () => (dispatch, getState) => {
       defaultNodeFontSize: "20",
       defaultNodeWidth: 200,
       defaultNodeHeight: 100,
+      zoom: 100,
       nodes: [],
       undo: [],
       redo: []

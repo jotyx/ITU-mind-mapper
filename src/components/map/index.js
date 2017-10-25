@@ -22,7 +22,12 @@ const Map = ({ activeMap, setActiveNode }) => {
         ) && setActiveNode(-1)}
     >
       {map(activeMap.nodes, (node, i) => (
-        <Node key={i} node={node} onClickAction={() => setActiveNode(i)} />
+        <Node
+          key={i}
+          node={node}
+          zoom={activeMap.zoom}
+          onClickAction={() => setActiveNode(i)}
+        />
       ))}
     </div>
   );
