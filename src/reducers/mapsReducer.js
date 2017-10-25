@@ -1,4 +1,4 @@
-import { map, filter } from "lodash";
+import { map, filter, isEmpty } from "lodash";
 
 import * as c from "../actions/constants";
 
@@ -47,7 +47,19 @@ const reducer = (state = initialState, action) => {
           state.list,
           item =>
             item.active
-              ? { ...item, nodes: [...item.nodes, action.payload.node] }
+              ? {
+                  ...item,
+                  nodes: [...item.nodes, action.payload.node],
+                  undo: [
+                    ...item.undo,
+                    {
+                      nodes: map(item.nodes, n => {
+                        return { ...n, active: false };
+                      })
+                    }
+                  ],
+                  redo: []
+                }
               : item
         )
       };
@@ -80,7 +92,16 @@ const reducer = (state = initialState, action) => {
             item.active
               ? {
                   ...item,
-                  nodes: filter(item.nodes, n => !n.active)
+                  nodes: filter(item.nodes, n => !n.active),
+                  undo: [
+                    ...item.undo,
+                    {
+                      nodes: map(item.nodes, n => {
+                        return { ...n, active: false };
+                      })
+                    }
+                  ],
+                  redo: []
                 }
               : item
         )
@@ -96,8 +117,23 @@ const reducer = (state = initialState, action) => {
                   ...item,
                   nodes: map(
                     item.nodes,
-                    n => (n.active ? { ...n, ...action.payload } : n)
-                  )
+                    n =>
+                      n.active
+                        ? {
+                            ...n,
+                            ...action.payload
+                          }
+                        : n
+                  ),
+                  undo: [
+                    ...item.undo,
+                    {
+                      nodes: map(item.nodes, n => {
+                        return { ...n, active: false };
+                      })
+                    }
+                  ],
+                  redo: []
                 }
               : item
         )
@@ -108,6 +144,52 @@ const reducer = (state = initialState, action) => {
         list: map(
           state.list,
           item => (item.active ? { ...item, ...action.payload } : item)
+        )
+      };
+    case c.ACTIVE_MAP_UNDO:
+      return {
+        ...state,
+        list: map(
+          state.list,
+          item =>
+            item.active && !isEmpty(item.undo)
+              ? {
+                  ...item,
+                  ...item.undo[item.undo.length - 1],
+                  redo: [
+                    ...item.redo,
+                    {
+                      nodes: map(item.nodes, n => {
+                        return { ...n, active: false };
+                      })
+                    }
+                  ],
+                  undo: item.undo.slice(0, item.undo.length - 1)
+                }
+              : item
+        )
+      };
+    case c.ACTIVE_MAP_REDO:
+      return {
+        ...state,
+        list: map(
+          state.list,
+          item =>
+            item.active && !isEmpty(item.redo)
+              ? {
+                  ...item,
+                  ...item.redo[item.redo.length - 1],
+                  undo: [
+                    ...item.undo,
+                    {
+                      nodes: map(item.nodes, n => {
+                        return { ...n, active: false };
+                      })
+                    }
+                  ],
+                  redo: item.redo.slice(0, item.redo.length - 1)
+                }
+              : item
         )
       };
     default:

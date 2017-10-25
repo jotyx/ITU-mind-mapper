@@ -19,10 +19,19 @@
 
     .icon {
         font-size: 36px;
+        color: $c-grey;
         cursor: pointer;
+
+        &.disabled {
+          color: $c-grey-light;
+        }
 
         &:hover {
             color: $c-blue;
+        }
+
+        &:hover.disabled {
+          color: $c-grey-light;
         }
 
         &-tooltip {

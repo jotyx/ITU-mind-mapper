@@ -1,15 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose } from "recompose";
-import { find } from "lodash";
+import { find, isEmpty } from "lodash";
 
 import Menu from "./Menu";
 import Icon from "./Icon";
 
 import { setDialog } from "../../actions/appActions";
-import { newNode, removeNode } from "../../actions/activeMapActions";
+import {
+  newNode,
+  removeNode,
+  undo,
+  redo
+} from "../../actions/activeMapActions";
 
-const WorkBar = ({ setDialog, newNode, activeNode, removeNode }) => {
+const WorkBar = ({
+  setDialog,
+  newNode,
+  activeNode,
+  removeNode,
+  undo,
+  redo,
+  activeMap
+}) => {
   return (
     <div className="work-bar">
       <Menu />
@@ -64,11 +77,17 @@ const WorkBar = ({ setDialog, newNode, activeNode, removeNode }) => {
         />
       )}
       <div className="vertical-line" />
-      <Icon iconType="fa-undo" tooltipLabel="Zpět" onClickAction={() => null} />
+      <Icon
+        iconType="fa-undo"
+        tooltipLabel="Zpět"
+        onClickAction={() => !isEmpty(activeMap.undo) && undo()}
+        disabled={isEmpty(activeMap.undo)}
+      />
       <Icon
         iconType="fa-repeat"
         tooltipLabel="Opakovat"
-        onClickAction={() => null}
+        onClickAction={() => !isEmpty(activeMap.redo) && redo()}
+        disabled={isEmpty(activeMap.redo)}
       />
       <div className="vertical-line" />
       <Icon
@@ -99,8 +118,9 @@ const WorkBar = ({ setDialog, newNode, activeNode, removeNode }) => {
 export default compose(
   connect(
     ({ maps: { list } }) => ({
+      activeMap: find(list, m => m.active),
       activeNode: find(find(list, m => m.active).nodes, n => n.active)
     }),
-    { setDialog, newNode, removeNode }
+    { setDialog, newNode, removeNode, undo, redo }
   )
 )(WorkBar);

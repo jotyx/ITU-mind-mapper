@@ -3616,9 +3616,14 @@ tbody .md-table-row {
     height: 100%; }
   .work-bar .icon {
     font-size: 36px;
+    color: #4d4d4d;
     cursor: pointer; }
+    .work-bar .icon.disabled {
+      color: #999999; }
     .work-bar .icon:hover {
       color: #3366cc; }
+    .work-bar .icon:hover.disabled {
+      color: #999999; }
     .work-bar .icon-tooltip {
       background-color: #3366cc !important; }
       .work-bar .icon-tooltip.place-top:after {
