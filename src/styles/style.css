@@ -3695,6 +3695,14 @@ tbody .md-table-row {
         font-family: "Trebuchet MS", Helvetica, sans-serif; }
       .map .node .title.font-verdana {
         font-family: Verdana, Geneva, sans-serif; }
+  .map svg {
+    position: absolute;
+    top: 0;
+    left: 0; }
+    .map svg polyline {
+      fill: none;
+      stroke: #000;
+      stroke-width: 3; }
 
 .dialog-color-change {
   width: 100%;

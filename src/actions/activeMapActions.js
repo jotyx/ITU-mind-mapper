@@ -1,4 +1,4 @@
-import { find, maxBy, isEmpty } from "lodash";
+import { find, maxBy, isEmpty, concat } from "lodash";
 
 import {
   ACTIVE_MAP_NODE_ADD,
@@ -8,7 +8,9 @@ import {
   ACTIVE_MAP_NODE_REMOVE,
   ACTIVE_MAP_CHANGE,
   ACTIVE_MAP_UNDO,
-  ACTIVE_MAP_REDO
+  ACTIVE_MAP_REDO,
+  MAP_SPACE_FACTOR,
+  ACTIVE_MAP_NODES_MOVE_DOWN
 } from "./constants";
 
 /* DEFAULT */
@@ -64,33 +66,86 @@ export const setActiveNode = index => ({
   payload: { index }
 });
 
-export const newNode = () => (dispatch, getState) => {
+export const moveNodesDown = (y, size) => ({
+  type: ACTIVE_MAP_NODES_MOVE_DOWN,
+  payload: { y, size }
+});
+
+/*
+export const moveNodesRight = (x, size) => ({
+  type: ACTIVE_MAP_NODES_MOVE_RIGHT,
+  payload: { x, size }
+});
+*/
+
+export const newNode = parent => (dispatch, getState) => {
   const activeMap = find(getState().maps.list, m => m.active);
 
+  const space =
+    (activeMap.defaultNodeWidth + activeMap.defaultNodeHeight) /
+    MAP_SPACE_FACTOR;
+
+  const xPos = parent ? parent.x + parent.width + space : space;
+
+  let max = null;
+  if (parent) {
+    for (let i = 0; i < parent.childNodes.length; i++) {
+      if (
+        !max ||
+        find(activeMap.nodes, n => n.id === parent.childNodes[i]).y > max.y
+      ) {
+        max = find(activeMap.nodes, n => n.id === parent.childNodes[i]);
+      }
+    }
+  }
+
   const yPos = !isEmpty(activeMap.nodes)
-    ? maxBy(activeMap.nodes, n => n.y).y +
-      maxBy(activeMap.nodes, n => n.y).height +
-      10
-    : 10;
+    ? parent
+      ? isEmpty(parent.childNodes) ? parent.y : max.y + max.height + space
+      : maxBy(activeMap.nodes, n => n.y).y +
+        maxBy(activeMap.nodes, n => n.y).height +
+        space
+    : space;
+
+  if (parent && !isEmpty(parent.childNodes)) {
+    dispatch(moveNodesDown(yPos, activeMap.defaultNodeHeight + space));
+  }
 
   dispatch({
     type: ACTIVE_MAP_NODE_ADD,
     payload: {
       node: {
+        id: activeMap.nextNodeId,
         title: NEW_NODE_TITLE,
         color: activeMap.defaultNodeColor,
         borderColor: activeMap.defaultNodeBorderColor,
         titleColor: activeMap.defaultNodeTitleColor,
-        x: 10,
+        x: xPos,
         y: yPos,
         width: activeMap.defaultNodeWidth,
         height: activeMap.defaultNodeHeight,
         font: activeMap.defaultNodeFont,
         fontSize: activeMap.defaultNodeFontSize,
-        active: false
-      }
+        active: false,
+        childNodes: []
+      },
+      parent
     }
   });
+
+  dispatch({
+    type: ACTIVE_MAP_CHANGE,
+    payload: {
+      nextNodeId: activeMap.nextNodeId + 1
+    }
+  });
+};
+
+export const newChildNode = () => (dispatch, getState) => {
+  const activeMap = find(getState().maps.list, m => m.active);
+  const parent = find(activeMap.nodes, n => n.active);
+
+  if (parent) dispatch(newNode(parent));
 };
 
 export const activeNodeChangeTitle = title => ({
@@ -100,10 +155,44 @@ export const activeNodeChangeTitle = title => ({
   }
 });
 
-export const removeNode = () => ({
-  type: ACTIVE_MAP_NODE_REMOVE,
-  payload: {}
-});
+export const getAllDescendantsIds = node => (dispatch, getState) => {
+  if (isEmpty(node.childNodes)) return [];
+
+  let ids = [];
+
+  for (let i = 0; i < node.childNodes.length; i++) {
+    ids = concat(
+      ids,
+      dispatch(
+        getAllDescendantsIds(
+          find(
+            find(getState().maps.list, m => m.active).nodes,
+            n => n.id === node.childNodes[i]
+          )
+        )
+      )
+    );
+  }
+
+  return [...node.childNodes, ...ids];
+};
+
+export const removeNode = () => (dispatch, getState) => {
+  const activeNode = find(
+    find(getState().maps.list, m => m.active).nodes,
+    n => n.active
+  );
+
+  const ids = isEmpty(activeNode.childNodes)
+    ? [activeNode.id]
+    : [activeNode.id, ...dispatch(getAllDescendantsIds(activeNode))];
+
+  if (activeNode)
+    dispatch({
+      type: ACTIVE_MAP_NODE_REMOVE,
+      payload: { ids }
+    });
+};
 
 export const activeNodeChangeColor = (color, borderColor, titleColor) => ({
   type: ACTIVE_MAP_NODE_CHANGE,

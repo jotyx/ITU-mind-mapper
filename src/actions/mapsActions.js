@@ -35,6 +35,7 @@ export const newMap = () => (dispatch, getState) => {
 
   dispatch(
     addMap({
+      nextNodeId: 1,
       name,
       defaultNodeColor: "#FFFFFF",
       defaultNodeBorderColor: "#111111",

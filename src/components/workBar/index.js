@@ -12,7 +12,8 @@ import {
   removeNode,
   undo,
   redo,
-  changeZoom
+  changeZoom,
+  newChildNode
 } from "../../actions/activeMapActions";
 
 const WorkBar = ({
@@ -23,7 +24,8 @@ const WorkBar = ({
   undo,
   redo,
   activeMap,
-  changeZoom
+  changeZoom,
+  newChildNode
 }) => {
   return (
     <div className="work-bar">
@@ -33,6 +35,13 @@ const WorkBar = ({
         tooltipLabel="Přidat uzel"
         onClickAction={() => newNode()}
       />
+      {activeNode && (
+        <Icon
+          iconType="fa-plus-square"
+          tooltipLabel="Přidat potomka"
+          onClickAction={() => newChildNode()}
+        />
+      )}
       {activeNode && <div className="vertical-line" />}
       {activeNode && (
         <Icon
@@ -125,6 +134,6 @@ export default compose(
       activeMap: find(list, m => m.active),
       activeNode: find(find(list, m => m.active).nodes, n => n.active)
     }),
-    { setDialog, newNode, removeNode, undo, redo, changeZoom }
+    { setDialog, newNode, removeNode, undo, redo, changeZoom, newChildNode }
   )
 )(WorkBar);

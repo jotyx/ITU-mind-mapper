@@ -16,8 +16,10 @@ export const ACTIVE_MAP_NODE_CHANGE = "ACTIVE_MAP_NODE_CHANGE";
 export const ACTIVE_MAP_NODE_REMOVE = "ACTIVE_MAP_NODE_REMOVE";
 export const ACTIVE_MAP_UNDO = "ACTIVE_MAP_UNDO";
 export const ACTIVE_MAP_REDO = "ACTIVE_MAP_REDO";
+export const ACTIVE_MAP_NODES_MOVE_DOWN = "ACTIVE_MAP_NODES_MOVE_DOWN";
 
 /* OTHER CONSTANTS */
 
 export const NEW_MAP_NAME = "Nová mapa";
 export const NEW_NODE_TITLE = "Nový uzel";
+export const MAP_SPACE_FACTOR = 10;

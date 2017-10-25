@@ -1,4 +1,4 @@
-import { map, filter, isEmpty } from "lodash";
+import { map, filter, isEmpty, find } from "lodash";
 
 import * as c from "../actions/constants";
 
@@ -49,7 +49,22 @@ const reducer = (state = initialState, action) => {
             item.active
               ? {
                   ...item,
-                  nodes: [...item.nodes, action.payload.node],
+                  nodes: [
+                    ...map(
+                      item.nodes,
+                      n =>
+                        action.payload.parent && n.active
+                          ? {
+                              ...n,
+                              childNodes: [
+                                ...n.childNodes,
+                                action.payload.node.id
+                              ]
+                            }
+                          : n
+                    ),
+                    action.payload.node
+                  ],
                   undo: [
                     ...item.undo,
                     {
@@ -92,7 +107,21 @@ const reducer = (state = initialState, action) => {
             item.active
               ? {
                   ...item,
-                  nodes: filter(item.nodes, n => !n.active),
+                  nodes: map(
+                    filter(
+                      item.nodes,
+                      n => !find(action.payload.ids, id => id === n.id)
+                    ),
+                    n => {
+                      return {
+                        ...n,
+                        childNodes: filter(
+                          n.childNodes,
+                          ch => !find(action.payload.ids, id => id === ch)
+                        )
+                      };
+                    }
+                  ),
                   undo: [
                     ...item.undo,
                     {
@@ -188,6 +217,26 @@ const reducer = (state = initialState, action) => {
                     }
                   ],
                   redo: item.redo.slice(0, item.redo.length - 1)
+                }
+              : item
+        )
+      };
+    case c.ACTIVE_MAP_NODES_MOVE_DOWN:
+      return {
+        ...state,
+        list: map(
+          state.list,
+          item =>
+            item.active
+              ? {
+                  ...item,
+                  nodes: map(
+                    item.nodes,
+                    n =>
+                      n.y >= action.payload.y
+                        ? { ...n, y: n.y + action.payload.size }
+                        : n
+                  )
                 }
               : item
         )
