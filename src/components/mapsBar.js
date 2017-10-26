@@ -6,9 +6,10 @@ import classNames from "classnames";
 import { ButtonGroup, Button } from "react-bootstrap";
 import { FontIcon } from "react-md";
 
-import { setActiveMap, removeMap } from "../actions/mapsActions";
+import { setActiveMap } from "../actions/mapsActions";
+import { setDialog } from "../actions/appActions";
 
-const MapsBar = ({ list, setActiveMap, removeMap }) => {
+const MapsBar = ({ list, setActiveMap, setDialog }) => {
   return (
     <div className="maps-bar">
       {map(list, (item, i) => (
@@ -24,7 +25,7 @@ const MapsBar = ({ list, setActiveMap, removeMap }) => {
             <Button
               className="button-remove"
               bsStyle={item.active ? "primary" : "default"}
-              onClick={() => removeMap(item.name)}
+              onClick={() => setDialog("RemoveMap", { name: item.name })}
             >
               <FontIcon iconClassName={"fa fa-times"} className="icon" />
             </Button>
@@ -36,5 +37,5 @@ const MapsBar = ({ list, setActiveMap, removeMap }) => {
 };
 
 export default compose(
-  connect(({ maps: { list } }) => ({ list }), { setActiveMap, removeMap })
+  connect(({ maps: { list } }) => ({ list }), { setActiveMap, setDialog })
 )(MapsBar);
