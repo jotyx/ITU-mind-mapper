@@ -1,4 +1,4 @@
-import { find, maxBy, isEmpty, concat } from "lodash";
+import { find, maxBy, isEmpty, concat, forEach } from "lodash";
 
 import {
   ACTIVE_MAP_NODE_ADD,
@@ -10,7 +10,8 @@ import {
   ACTIVE_MAP_UNDO,
   ACTIVE_MAP_REDO,
   MAP_SPACE_FACTOR,
-  ACTIVE_MAP_NODES_MOVE_DOWN
+  ACTIVE_MAP_NODES_MOVE_DOWN,
+  ACTIVE_MAP_NODE_MOVE_RIGHT
 } from "./constants";
 
 /* DEFAULT */
@@ -71,12 +72,10 @@ export const moveNodesDown = (y, size) => ({
   payload: { y, size }
 });
 
-/*
-export const moveNodesRight = (x, size) => ({
-  type: ACTIVE_MAP_NODES_MOVE_RIGHT,
-  payload: { x, size }
+export const moveNodeRight = (id, size) => ({
+  type: ACTIVE_MAP_NODE_MOVE_RIGHT,
+  payload: { id, size }
 });
-*/
 
 export const newNode = parent => (dispatch, getState) => {
   const activeMap = find(getState().maps.list, m => m.active);
@@ -85,7 +84,11 @@ export const newNode = parent => (dispatch, getState) => {
     (activeMap.defaultNodeWidth + activeMap.defaultNodeHeight) /
     MAP_SPACE_FACTOR;
 
-  const xPos = parent ? parent.x + parent.width + space : space;
+  const xPos = parent
+    ? isEmpty(parent.childNodes)
+      ? parent.x + parent.width + space
+      : find(activeMap.nodes, n => n.id === parent.childNodes[0]).x
+    : space;
 
   let max = null;
   if (parent) {
@@ -141,11 +144,50 @@ export const newNode = parent => (dispatch, getState) => {
   });
 };
 
-export const newChildNode = () => (dispatch, getState) => {
-  const activeMap = find(getState().maps.list, m => m.active);
-  const parent = find(activeMap.nodes, n => n.active);
+export const moveDescendantsToRight = node => (dispatch, getState) => {
+  forEach(node.childNodes, n => {
+    dispatch(
+      moveNodeRight(
+        n,
+        (find(getState().maps.list, m => m.active).defaultNodeWidth +
+          find(getState().maps.list, m => m.active).defaultNodeHeight) /
+          MAP_SPACE_FACTOR
+      )
+    );
+    dispatch(
+      moveDescendantsToRight(
+        find(find(getState().maps.list, m => m.active).nodes, l => l.id === n)
+      )
+    );
+  });
+};
 
-  if (parent) dispatch(newNode(parent));
+export const newChildNode = () => (dispatch, getState) => {
+  forEach(
+    find(find(getState().maps.list, m => m.active).nodes, n => n.active)
+      .childNodes,
+    n => {
+      dispatch(
+        moveNodeRight(
+          n,
+          (find(getState().maps.list, m => m.active).defaultNodeWidth +
+            find(getState().maps.list, m => m.active).defaultNodeHeight) /
+            MAP_SPACE_FACTOR
+        )
+      );
+      dispatch(
+        moveDescendantsToRight(
+          find(find(getState().maps.list, m => m.active).nodes, l => l.id === n)
+        )
+      );
+    }
+  );
+
+  dispatch(
+    newNode(
+      find(find(getState().maps.list, m => m.active).nodes, n => n.active)
+    )
+  );
 };
 
 export const activeNodeChangeTitle = title => ({
