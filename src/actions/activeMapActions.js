@@ -55,6 +55,13 @@ export const backgroundColorChange = backgroundColor => ({
   }
 });
 
+export const lineColorChange = lineColor => ({
+  type: ACTIVE_MAP_CHANGE,
+  payload: {
+    lineColor
+  }
+});
+
 /* UNDO, REDO */
 
 export const undo = () => ({

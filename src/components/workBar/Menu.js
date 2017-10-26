@@ -89,6 +89,15 @@ const Menu = ({ newMap, setDialog, list }) => {
         >
           Změnit barvu pozadí
         </MenuItem>
+        <MenuItem
+          eventKey="10"
+          onClick={() =>
+            setDialog("LineColorChange", {
+              lineColor: activeMap.lineColor
+            })}
+        >
+          Změnit barvu spojnic
+        </MenuItem>
       </DropdownButton>
       <ReactTooltip
         className="icon-tooltip"

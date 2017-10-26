@@ -56,6 +56,7 @@ const Map = ({ activeMap, setActiveNode }) => {
               nodeFrom={l.nodeFrom}
               nodeTo={l.nodeTo}
               zoom={activeMap.zoom}
+              color={activeMap.lineColor}
             />
           ))}
         </svg>

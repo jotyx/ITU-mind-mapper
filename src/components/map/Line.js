@@ -1,6 +1,6 @@
 import React from "react";
 
-const Line = ({ nodeFrom, nodeTo, zoom }) => {
+const Line = ({ nodeFrom, nodeTo, zoom, color }) => {
   return (
     <polyline
       points={`${(nodeFrom.x + nodeFrom.width) * (zoom / 100)}, ${(nodeFrom.y +
@@ -8,6 +8,7 @@ const Line = ({ nodeFrom, nodeTo, zoom }) => {
         (zoom / 100)} ${nodeTo.x * (zoom / 100)}, ${(nodeTo.y +
         nodeTo.height / 2) *
         (zoom / 100)}`}
+      style={{ stroke: color }}
     />
   );
 };

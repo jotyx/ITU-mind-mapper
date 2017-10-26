@@ -3701,7 +3701,6 @@ tbody .md-table-row {
     left: 0; }
     .map svg polyline {
       fill: none;
-      stroke: #000;
       stroke-width: 3; }
 
 .dialog-color-change {
