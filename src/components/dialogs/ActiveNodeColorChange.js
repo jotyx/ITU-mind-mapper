@@ -13,7 +13,7 @@ import { setDialog } from "../../actions/appActions";
 
 import { colors } from "../../enums";
 
-const ActiveNodeColorChange = ({ handleSubmit, color, data, setDialog }) => (
+const ActiveNodeColorChange = ({ handleSubmit, data, setDialog }) => (
   <DialogContainer
     title="Změnit barvu uzlu"
     name="ActiveNodeColorChange"

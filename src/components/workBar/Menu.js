@@ -79,6 +79,16 @@ const Menu = ({ newMap, setDialog, list }) => {
         >
           Změnit výchozí velikost uzlů
         </MenuItem>
+        <MenuItem divider />
+        <MenuItem
+          eventKey="9"
+          onClick={() =>
+            setDialog("BackgroundColorChange", {
+              backgroundColor: activeMap.backgroundColor
+            })}
+        >
+          Změnit barvu pozadí
+        </MenuItem>
       </DropdownButton>
       <ReactTooltip
         className="icon-tooltip"

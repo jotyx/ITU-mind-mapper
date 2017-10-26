@@ -39,11 +39,14 @@ const Map = ({ activeMap, setActiveNode }) => {
       className="map"
       id="map"
       onClick={e =>
-        false && !coordinatesInsideNode(
+        false &&
+        !coordinatesInsideNode(
           e.pageX,
           e.pageY - document.getElementById("map").getBoundingClientRect().top,
           activeMap
-        ) && setActiveNode(-1)}
+        ) &&
+        setActiveNode(-1)}
+      style={{ backgroundColor: activeMap.backgroundColor }}
     >
       {!isEmpty(linesPoints) && (
         <svg style={{ width: maxX, height: maxY }}>

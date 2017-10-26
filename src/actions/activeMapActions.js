@@ -48,6 +48,13 @@ export const defaultNodeChangeSize = (defaultNodeWidth, defaultNodeHeight) => ({
   }
 });
 
+export const backgroundColorChange = backgroundColor => ({
+  type: ACTIVE_MAP_CHANGE,
+  payload: {
+    backgroundColor
+  }
+});
+
 /* UNDO, REDO */
 
 export const undo = () => ({
