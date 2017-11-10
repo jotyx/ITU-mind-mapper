@@ -1,73 +1,108 @@
 .work-bar {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    height: $height-work-bar;
-    background-color: $c-blue-light;
-    border-bottom: 1px solid $c-blue;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  height: $height-work-bar;
+  background-color: $c-blue-light;
+  border-bottom: 1px solid $c-blue;
 
-    .menu, .icon, .vertical-line {
-        margin-left: 15px;
+  .menu,
+  .icon,
+  .vertical-line {
+    margin-left: 15px;
+  }
+
+  .vertical-line {
+    border-left: 1px solid $c-blue;
+    height: 100%;
+  }
+
+  .icon {
+    font-size: 36px;
+    color: $c-grey;
+    cursor: pointer;
+
+    &.disabled {
+      color: $c-grey-light;
     }
 
-    .vertical-line {
-        border-left: 1px solid $c-blue;
-        height: 100%;
+    &:hover {
+      color: $c-blue;
+    }
+
+    &:hover.disabled {
+      color: $c-grey-light;
+    }
+
+    &-tooltip {
+      background-color: $c-blue !important;
+
+      &.place-top {
+        &:after {
+          border-top-color: $c-blue !important;
+          border-top-style: solid !important;
+          border-top-width: 6px !important;
+        }
+      }
+
+      &.place-right {
+        &:after {
+          border-right-color: $c-blue !important;
+          border-right-style: solid !important;
+          border-right-width: 6px !important;
+        }
+      }
+
+      &.place-left {
+        &:after {
+          border-left-color: $c-blue !important;
+          border-left-style: solid !important;
+          border-left-width: 6px !important;
+        }
+      }
+
+      &.place-bottom {
+        &:after {
+          border-bottom-color: $c-blue !important;
+          border-bottom-style: solid !important;
+          border-bottom-width: 6px !important;
+        }
+      }
+    }
+  }
+
+  .icon-stack {
+    position: relative;
+    width: 36px;
+    height: 36px;
+
+    &:hover {
+      .icon {
+        color: $c-blue;
+      }
     }
 
     .icon {
-        font-size: 36px;
-        color: $c-grey;
-        cursor: pointer;
+      position: absolute;
 
-        &.disabled {
-          color: $c-grey-light;
-        }
+      &.full-size {
+        top: 0px;
+        left: 0px;
+      }
 
-        &:hover {
-            color: $c-blue;
-        }
+      &.top-left {
+        font-size: 12px;
+        top: 5px;
+        left: 5px;
+      }
 
-        &:hover.disabled {
-          color: $c-grey-light;
-        }
-
-        &-tooltip {
-            background-color: $c-blue !important;
-  
-            &.place-top {
-              &:after {
-                border-top-color: $c-blue !important;
-                border-top-style: solid !important;
-                border-top-width: 6px !important;
-              }
-            }
-  
-            &.place-right {
-              &:after {
-                border-right-color: $c-blue !important;
-                border-right-style: solid !important;
-                border-right-width: 6px !important;
-              }
-            }
-  
-            &.place-left {
-              &:after {
-                border-left-color: $c-blue !important;
-                border-left-style: solid !important;
-                border-left-width: 6px !important;
-              }
-            }
-  
-            &.place-bottom {
-              &:after {
-                border-bottom-color: $c-blue !important;
-                border-bottom-style: solid !important;
-                border-bottom-width: 6px !important;
-              }
-            }
-          }
+      &.bottom-right {
+        font-size: 12px;
+        top: 15px;
+        left: 15px;
+      }
     }
+  }
 }

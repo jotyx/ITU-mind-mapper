@@ -3609,7 +3609,9 @@ tbody .md-table-row {
   height: 57px;
   background-color: #bbddfe;
   border-bottom: 1px solid #3366cc; }
-  .work-bar .menu, .work-bar .icon, .work-bar .vertical-line {
+  .work-bar .menu,
+  .work-bar .icon,
+  .work-bar .vertical-line {
     margin-left: 15px; }
   .work-bar .vertical-line {
     border-left: 1px solid #3366cc;
@@ -3642,6 +3644,25 @@ tbody .md-table-row {
         border-bottom-color: #3366cc !important;
         border-bottom-style: solid !important;
         border-bottom-width: 6px !important; }
+  .work-bar .icon-stack {
+    position: relative;
+    width: 36px;
+    height: 36px; }
+    .work-bar .icon-stack:hover .icon {
+      color: #3366cc; }
+    .work-bar .icon-stack .icon {
+      position: absolute; }
+      .work-bar .icon-stack .icon.full-size {
+        top: 0px;
+        left: 0px; }
+      .work-bar .icon-stack .icon.top-left {
+        font-size: 12px;
+        top: 5px;
+        left: 5px; }
+      .work-bar .icon-stack .icon.bottom-right {
+        font-size: 12px;
+        top: 15px;
+        left: 15px; }
 
 .map {
   width: 100%;

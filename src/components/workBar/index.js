@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import { find, isEmpty } from "lodash";
+import { FontIcon } from "react-md";
+import ReactTooltip from "react-tooltip";
 
 import Menu from "./Menu";
 import Icon from "./Icon";
@@ -36,11 +38,24 @@ const WorkBar = ({
         onClickAction={() => newNode()}
       />
       {activeNode && (
-        <Icon
-          iconType="fa-plus-square"
-          tooltipLabel="Přidat potomka"
-          onClickAction={() => newChildNode()}
-        />
+        <span className="icon-stack" onClick={() => newChildNode()}>
+          <FontIcon
+            iconClassName="fa fa-square-o icon full-size"
+            data-tip="Přidat potomka"
+          />
+          <ReactTooltip
+            className="icon-tooltip"
+            type="dark"
+            effect="solid"
+            place="bottom"
+          />
+          <FontIcon iconClassName="fa fa-square icon top-left" />
+          <FontIcon iconClassName="fa fa-plus-square-o icon bottom-right" />
+
+          <svg style={{ width: 24, height: 24 }}>
+            <polyline points="10, 10 20, 20" />
+          </svg>
+        </span>
       )}
       {activeNode && <div className="vertical-line" />}
       {activeNode && (
