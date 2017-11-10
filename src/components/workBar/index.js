@@ -38,7 +38,10 @@ const WorkBar = ({
         onClickAction={() => newNode()}
       />
       {activeNode && (
-        <span className="icon-stack" onClick={() => newChildNode()}>
+        <span
+          className="icon-stack desktop-only"
+          onClick={() => newChildNode()}
+        >
           <FontIcon
             iconClassName="fa fa-square-o icon full-size"
             data-tip="Přidat potomka"
@@ -53,7 +56,7 @@ const WorkBar = ({
           <FontIcon iconClassName="fa fa-plus-square-o icon bottom-right" />
         </span>
       )}
-      {activeNode && <div className="vertical-line" />}
+      {activeNode && <div className="vertical-line desktop-only" />}
       {activeNode && (
         <Icon
           iconType="fa-files-o"
@@ -98,7 +101,7 @@ const WorkBar = ({
           onClickAction={() => removeNode()}
         />
       )}
-      <div className="vertical-line" />
+      <div className="vertical-line desktop-only" />
       <Icon
         iconType="fa-undo"
         tooltipLabel="Zpět"
@@ -111,7 +114,7 @@ const WorkBar = ({
         onClickAction={() => !isEmpty(activeMap.redo) && redo()}
         disabled={isEmpty(activeMap.redo)}
       />
-      <div className="vertical-line" />
+      <div className="vertical-line desktop-only" />
       <Icon
         iconType="fa-search-plus"
         tooltipLabel="Přiblížit"
@@ -129,7 +132,7 @@ const WorkBar = ({
         onClickAction={() =>
           activeMap.zoom > 25 && changeZoom(activeMap.zoom - 25)}
       />
-      <div className="vertical-line" />
+      <div className="vertical-line desktop-only" />
       <Icon
         iconType="fa-question-circle"
         tooltipLabel="Nápověda"

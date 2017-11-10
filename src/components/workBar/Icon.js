@@ -5,7 +5,7 @@ import ReactTooltip from "react-tooltip";
 
 const Icon = ({ iconType, tooltipLabel, onClickAction, disabled }) => {
   return (
-    <div>
+    <div className="desktop-only">
       <FontIcon
         iconClassName={classNames(`fa ${iconType} icon`, { disabled })}
         data-tip={tooltipLabel}

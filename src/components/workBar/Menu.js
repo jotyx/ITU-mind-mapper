@@ -1,16 +1,35 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose } from "recompose";
-import { find } from "lodash";
+import { find, isEmpty } from "lodash";
 import { DropdownButton, MenuItem, Glyphicon } from "react-bootstrap";
 import ReactTooltip from "react-tooltip";
 
+import {
+  newNode,
+  removeNode,
+  undo,
+  redo,
+  changeZoom,
+  newChildNode
+} from "../../actions/activeMapActions";
 import { newMap } from "../../actions/mapsActions";
 import { setDialog } from "../../actions/appActions";
 
 import { downloadFile } from "../../utils";
 
-const Menu = ({ newMap, setDialog, list }) => {
+const Menu = ({
+  newMap,
+  setDialog,
+  list,
+  newNode,
+  activeNode,
+  removeNode,
+  undo,
+  redo,
+  changeZoom,
+  newChildNode
+}) => {
   const activeMap = find(list, m => m.active);
   return (
     <div className="menu">
@@ -98,6 +117,113 @@ const Menu = ({ newMap, setDialog, list }) => {
         >
           Změnit barvu spojnic
         </MenuItem>
+        <MenuItem divider className="mobile-only" />
+        <MenuItem
+          eventKey="11"
+          onClick={() => newNode()}
+          className="mobile-only"
+        >
+          Přidat uzel
+        </MenuItem>
+        <MenuItem
+          eventKey="12"
+          onClick={() => newChildNode()}
+          className="mobile-only"
+        >
+          Přidat potomka
+        </MenuItem>
+        <MenuItem divider className="mobile-only" />
+        <MenuItem eventKey="13" onClick={() => null} className="mobile-only">
+          Kopírovat uzel
+        </MenuItem>
+        <MenuItem
+          eventKey="14"
+          onClick={() =>
+            setDialog("ActiveNodeColorChange", {
+              color: activeNode.color,
+              borderColor: activeNode.borderColor,
+              titleColor: activeNode.titleColor
+            })}
+          className="mobile-only"
+        >
+          Změnit barvu uzlu
+        </MenuItem>
+        <MenuItem
+          eventKey="15"
+          onClickAction={() =>
+            setDialog("ActiveNodeFontChange", {
+              font: activeNode.font,
+              fontSize: activeNode.fontSize
+            })}
+          className="mobile-only"
+        >
+          Změnit font
+        </MenuItem>
+        <MenuItem
+          eventKey="16"
+          onClickAction={() => setDialog("ActiveNodeTitleChange", activeNode)}
+          className="mobile-only"
+        >
+          Upravit uzel
+        </MenuItem>
+        <MenuItem
+          eventKey="17"
+          onClickAction={() => removeNode()}
+          className="mobile-only"
+        >
+          Odstranit uzel
+        </MenuItem>
+        <MenuItem divider className="mobile-only" />
+        {!isEmpty(activeMap.undo) && (
+          <MenuItem
+            eventKey="18"
+            onClickAction={() => !isEmpty(activeMap.undo) && undo()}
+            className="mobile-only"
+          >
+            Zpět
+          </MenuItem>
+        )}
+        {!isEmpty(activeMap.redo) && (
+          <MenuItem
+            eventKey="19"
+            onClickAction={() => !isEmpty(activeMap.redo) && redo()}
+            className="mobile-only"
+          >
+            Opakovat
+          </MenuItem>
+        )}
+        <MenuItem divider className="mobile-only" />
+        <MenuItem
+          eventKey="20"
+          onClickAction={() =>
+            activeMap.zoom < 500 && changeZoom(activeMap.zoom + 25)}
+          className="mobile-only"
+        >
+          Přiblížit
+        </MenuItem>
+        <MenuItem
+          eventKey="21"
+          onClickAction={() => changeZoom(100)}
+          className="mobile-only"
+        >
+          Původní přiblížení
+        </MenuItem>
+        <MenuItem
+          eventKey="22"
+          onClickAction={() =>
+            activeMap.zoom > 25 && changeZoom(activeMap.zoom - 25)}
+          className="mobile-only"
+        >
+          Oddálit
+        </MenuItem>
+        <MenuItem divider className="mobile-only" />
+        <MenuItem
+          eventKey="23"
+          onClickAction={() => setDialog("Help")}
+          className="mobile-only"
+        >
+          Nápověda
+        </MenuItem>
       </DropdownButton>
       <ReactTooltip
         className="icon-tooltip"
@@ -110,5 +236,14 @@ const Menu = ({ newMap, setDialog, list }) => {
 };
 
 export default compose(
-  connect(({ maps: { list } }) => ({ list }), { newMap, setDialog })
+  connect(({ maps: { list } }) => ({ list }), {
+    newMap,
+    setDialog,
+    newNode,
+    removeNode,
+    undo,
+    redo,
+    changeZoom,
+    newChildNode
+  })
 )(Menu);
