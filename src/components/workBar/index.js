@@ -51,10 +51,6 @@ const WorkBar = ({
           />
           <FontIcon iconClassName="fa fa-square icon top-left" />
           <FontIcon iconClassName="fa fa-plus-square-o icon bottom-right" />
-
-          <svg style={{ width: 24, height: 24 }}>
-            <polyline points="10, 10 20, 20" />
-          </svg>
         </span>
       )}
       {activeNode && <div className="vertical-line" />}
