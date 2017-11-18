@@ -4,6 +4,7 @@ import { compose } from "recompose";
 import { find, isEmpty } from "lodash";
 import { DropdownButton, MenuItem, Glyphicon } from "react-bootstrap";
 import ReactTooltip from "react-tooltip";
+import { FilePicker } from 'react-file-picker';
 
 import {
   newNode,
@@ -14,6 +15,7 @@ import {
   newChildNode
 } from "../../actions/activeMapActions";
 import { newMap } from "../../actions/mapsActions";
+import { loadMap } from "../../actions/mapsActions";
 import { setDialog } from "../../actions/appActions";
 
 import { downloadFile } from "../../utils";
@@ -43,7 +45,24 @@ const Menu = ({
         <MenuItem eventKey="1" onClick={() => newMap()}>
           Nová mapa
         </MenuItem>
-        <MenuItem eventKey="2">Načíst ze souboru</MenuItem>
+
+        <FilePicker
+          extensions={['json']}
+          onChange={FileObject => 
+              loadMap(
+                FileObject
+              )}
+          onError={errMsg =>
+            alert(
+              "Chybný soubor!"
+            )}
+        >
+           <MenuItem eventKey="2"
+           >
+           Načíst mapu ze souboru
+           </MenuItem>
+        </FilePicker>
+
         <MenuItem divider />
         <MenuItem
           eventKey="3"

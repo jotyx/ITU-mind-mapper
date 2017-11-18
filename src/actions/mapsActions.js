@@ -82,3 +82,8 @@ export const renameMap = (oldName, newName) => (dispatch, getState) => {
 
   return true;
 };
+
+export const loadMap = (object) => (dispatch, getState) => {
+  const loaded = JSON.parse(object);
+  dispatch(addMap(loaded));
+};
