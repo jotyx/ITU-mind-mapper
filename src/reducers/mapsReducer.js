@@ -261,6 +261,46 @@ const reducer = (state = initialState, action) => {
               : item
         )
       };
+      case c.ACTIVE_MAP_NODE_MOVE_UP:
+      return {
+        ...state,
+        list: map(
+          state.list,
+          item =>
+            item.active
+              ? {
+                  ...item,
+                  nodes: map(
+                    item.nodes,
+                    n =>
+                      n.id === action.payload.id
+                        ? { ...n, y: n.y - action.payload.size }
+                        : n
+                  )
+                }
+              : item
+        )
+      };
+    case c.ACTIVE_MAP_NODES_MOVE_UP:
+      return {
+        ...state,
+        list: map(
+          state.list,
+          item =>
+            item.active
+              ? {
+                ...item,
+                nodes: map(
+                  item.nodes,
+                  n =>
+                    n.y >= action.payload.y
+                      ? { ...n, y: n.y - action.payload.size}
+                      : n
+                )
+              }
+            : item
+        )
+      };
     default:
       return state;
   }
