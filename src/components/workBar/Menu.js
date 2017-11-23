@@ -4,7 +4,7 @@ import { compose } from "recompose";
 import { find, isEmpty } from "lodash";
 import { DropdownButton, MenuItem, Glyphicon } from "react-bootstrap";
 import ReactTooltip from "react-tooltip";
-import { FilePicker } from 'react-file-picker';
+import FileReaderInput from "react-file-reader-input";
 
 import {
   newNode,
@@ -30,6 +30,7 @@ const Menu = ({
   undo,
   redo,
   changeZoom,
+  loadMap,
   newChildNode
 }) => {
   const activeMap = find(list, m => m.active);
@@ -46,22 +47,15 @@ const Menu = ({
           Nová mapa
         </MenuItem>
 
-        <FilePicker
-          extensions={['json']}
-          onChange={FileObject => 
-              loadMap(
-                FileObject
-              )}
-          onError={errMsg =>
-            alert(
-              "Chybný soubor!"
-            )}
-        >
-           <MenuItem eventKey="2"
-           >
-           Načíst mapu ze souboru
-           </MenuItem>
-        </FilePicker>
+      <FileReaderInput
+        as="text"
+        id="my-file-input"
+        onChange={(_, results) => loadMap(results[0][0].target.result)}
+      >
+        <MenuItem eventKey="2">
+          <p className="upload">     Načíst mapu ze souboru</p>
+        </MenuItem>
+      </FileReaderInput>
 
         <MenuItem divider />
         <MenuItem
@@ -263,6 +257,7 @@ export default compose(
     undo,
     redo,
     changeZoom,
-    newChildNode
+    newChildNode,
+    loadMap
   })
 )(Menu);

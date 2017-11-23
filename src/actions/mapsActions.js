@@ -83,7 +83,12 @@ export const renameMap = (oldName, newName) => (dispatch, getState) => {
   return true;
 };
 
-export const loadMap = (object) => (dispatch, getState) => {
-  const loaded = JSON.parse(object);
-  dispatch(addMap(loaded));
+export const loadMap = data => (dispatch, getState) => {
+  const activeMap = find(getState().maps.list, m => m.active);
+  const loadedMap = JSON.parse(data);
+
+  if (activeMap.name === loadedMap.name) {
+    loadedMap.name = loadedMap.name + "-1";
+  }
+  dispatch(addMap(loadedMap));
 };

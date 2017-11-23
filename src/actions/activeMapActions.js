@@ -324,7 +324,7 @@ export const removeNode = parent => (dispatch, getState) => {
 
 		// Hladame vysku posledneho childu pred vymazaním
 		forEach(activeMap.nodes, node => {
-			if (node.id = arrayOfChilds[arrayOfChilds.length-1]) {
+			if (node.id === arrayOfChilds[arrayOfChilds.length-1]) {
 				levelOfMovingUp = node.y;
 			}
 		});

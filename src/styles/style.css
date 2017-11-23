@@ -9,6 +9,10 @@ body {
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   color: #555; }
 
+.upload {
+  margin-left: 20px;
+  color: black; }
+
 .md-display-4 {
   letter-spacing: -.1px; }
 
