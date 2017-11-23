@@ -245,6 +245,27 @@ export const getAllDescendantsIds = node => (dispatch, getState) => {
   return [...node.childNodes, ...ids];
 };
 
+export const getMaxDepth = node => (dispatch, getState) => {
+	const activeMap = find(getState().maps.list, m => m.active);
+
+	let depth = 1;
+
+	for (let i = 0; i < node.childNodes.length; i++) { // Cez všetky deti
+		for (let j = 0; j < activeMap.nodes.length; j++) { // Hladáme dieťa vo všetkých uzloch
+			if (activeMap.nodes[j].id === node.childNodes[i]) { // Našli sme child node
+				if (i === 0 && isEmpty(activeMap.nodes[j].childNodes)) // Ak je to prvy uzel, nič
+					break;
+
+				if (i === 0) // Ak je prvy a má deti, nepočítať ho
+					depth--;
+
+				depth += dispatch(getMaxDepth(activeMap.nodes[j]));
+			}
+		}
+	}
+	return depth;
+};
+
 export const removeNode = parent => (dispatch, getState) => {
   const activeNode = find(
     find(getState().maps.list, m => m.active).nodes,
@@ -257,32 +278,21 @@ export const removeNode = parent => (dispatch, getState) => {
     ? [activeNode.id]
     : [activeNode.id, ...dispatch(getAllDescendantsIds(activeNode))];
 
-		// if (activeNode)
-    // dispatch({
-    //   type: ACTIVE_MAP_NODE_REMOVE,
-    //   payload: { ids }
-    // });
-
-  // Pridané **************
   const activeMap = find(getState().maps.list, m => m.active);
 
   const space =
   (activeMap.defaultNodeWidth + activeMap.defaultNodeHeight) /
   MAP_SPACE_FACTOR;
-	
-	var hlbka = activeNode.childNodes.length;
-	if (hlbka == 0) {
-		hlbka = 1; 
-	}
 
+	// Hladame rodiča mazaného uzla a či je prvý z childov
 	var parentID = null;
 	var isFirst = false;
-	for (let i = 0; i < activeMap.nodes.length; i++) { // Cez všetky uzly,
-		if (activeMap.nodes[i].childNodes.length > 0) { // keď má uzol deti,
-			for (let j = 0; j < activeMap.nodes[i].childNodes.length; j++) { // cez tieto deti,
-				if (activeMap.nodes[i].childNodes[j] === activeNode.id) { // ak má uzol dieťa activeNode
+	for (let i = 0; i < activeMap.nodes.length; i++) {
+		if (activeMap.nodes[i].childNodes.length > 0) {
+			for (let j = 0; j < activeMap.nodes[i].childNodes.length; j++) {
+				if (activeMap.nodes[i].childNodes[j] === activeNode.id) {
 					parentID = activeMap.nodes[i].id;
-					if (j == 0) {
+					if (j === 0) {
 						isFirst = true;
 					}
 				}
@@ -290,24 +300,24 @@ export const removeNode = parent => (dispatch, getState) => {
 		}
 	}
 
-	// TU SA MAŽE
+	var depth = dispatch(getMaxDepth(activeNode));
+
 	if (activeNode)
 	dispatch({
 		type: ACTIVE_MAP_NODE_REMOVE,
 		payload: { ids }
 	});
 
-	// Vymazavame prvy child uzlik
+	// Vymazavame prvy child uzol
 	if (isFirst) {
 		for(let i = 0; i < activeMap.nodes.length; i++) {
 			if (activeMap.nodes[i].id === parentID) {
 				var arrayOfChilds = activeMap.nodes[i].childNodes;
 
 				// Ak je to jediny child a ma max 1 potomka, neposuvať UP
-				if (arrayOfChilds.length == 1 && activeNode.childNodes.length <= 1) {
+				if (arrayOfChilds.length === 1 && activeNode.childNodes.length <= 1) {
 					return;
 				}
-				hlbka = activeNode.childNodes.length;
 				break;
 			}
 		}
@@ -329,7 +339,7 @@ export const removeNode = parent => (dispatch, getState) => {
 		});
 	}
 
-	for (let i = 0; i < hlbka; i++) {
+	for (let i = 0; i < depth; i++) {
 		dispatch(moveNodesUp(levelOfMovingUp, activeMap.defaultNodeHeight + space));		
 	}
 };
