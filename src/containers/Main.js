@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose, lifecycle } from "recompose";
 
-import MapsBar from "../components/MapsBar";
+import MapsBar from "../components/mapsBar";
 import WorkBar from "../components/workBar";
 import Map from "../components/map";
 
@@ -19,10 +19,11 @@ const Main = () => {
 };
 
 export default compose(
-  connect(null, { newMap }),
+  connect( ({ maps }) => ({ maps }), { newMap }),
   lifecycle({
     componentWillMount() {
-      this.props.newMap();
+      if (this.props.maps.list.length === 0)
+        this.props.newMap();
     }
   })
 )(Main);

@@ -3,7 +3,7 @@ import { map, filter, isEmpty, find } from "lodash";
 import * as c from "../actions/constants";
 
 const initialState = {
-  list: []
+  list: [ { ...require("../res/test_map.json"), active: true} ]
 };
 
 const reducer = (state = initialState, action) => {

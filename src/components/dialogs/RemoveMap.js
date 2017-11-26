@@ -13,7 +13,7 @@ const RemoveMap = ({ handleSubmit, data }) => (
     title="Zavřít mapu"
     name="RemoveMap"
     handleSubmit={handleSubmit}
-    submitLabel="Zavřít"
+    submitLabel="Ano"
   >
     Opravdu si přejete zavřít mapu "{data ? data.name : ""}"?
   </DialogContainer>
