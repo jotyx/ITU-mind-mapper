@@ -271,7 +271,7 @@ export const removeNode = parent => (dispatch, getState) => {
     find(getState().maps.list, m => m.active).nodes,
     n => n.active
 	);
-	
+
 	var levelOfMovingUp = activeNode.y;
 
   const ids = isEmpty(activeNode.childNodes)
@@ -340,7 +340,7 @@ export const removeNode = parent => (dispatch, getState) => {
 	}
 
 	for (let i = 0; i < depth; i++) {
-		dispatch(moveNodesUp(levelOfMovingUp, activeMap.defaultNodeHeight + space));		
+		dispatch(moveNodesUp(levelOfMovingUp, activeMap.defaultNodeHeight + space));
 	}
 };
 
@@ -359,6 +359,13 @@ export const activeNodeChangeFont = (font, fontSize) => ({
     font,
     fontSize
   }
+});
+
+/* RESIZE */
+
+export const activeNodeResizeNode = (width, height) => ({
+  type: ACTIVE_MAP_NODE_CHANGE,
+  payload: { width, height }
 });
 
 export const changeZoom = zoom => ({

@@ -7,6 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 import App from './App';
 import configureStore from './utils/store';
 
+import 'react-resizable/css/styles.css'
 import 'normalize.css';
 import './styles/style.css';
 
