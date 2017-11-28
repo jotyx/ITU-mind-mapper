@@ -47,15 +47,15 @@ const Menu = ({
           Nová mapa
         </MenuItem>
 
-      <FileReaderInput
-        as="text"
-        id="my-file-input"
-        onChange={(_, results) => loadMap(results[0][0].target.result)}
-      >
-        <MenuItem eventKey="2">
-          <p className="upload">     Načíst mapu ze souboru</p>
-        </MenuItem>
-      </FileReaderInput>
+        <FileReaderInput
+          as="text"
+          id="my-file-input"
+          onChange={(_, results) => loadMap(results[0][0].target.result)}
+        >
+          <MenuItem eventKey="2" disable="true" className="upload">
+              Načíst mapu ze souboru
+          </MenuItem>
+        </FileReaderInput>
 
         <MenuItem divider />
         <MenuItem
@@ -78,7 +78,11 @@ const Menu = ({
         >
           Přejmenovat
         </MenuItem>
-        <MenuItem eventKey="5">Exportovat do obrázku</MenuItem>
+        <MenuItem
+          eventKey="5"
+        >
+        Exportovat do obrázku
+        </MenuItem>
         <MenuItem divider />
         <MenuItem
           eventKey="6"

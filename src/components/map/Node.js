@@ -1,5 +1,5 @@
 import React from "react";
-import { Resizable, ResizableBox } from 'react-resizable';
+import { Resizable } from 'react-resizable';
 import classNames from "classnames";
 
 class Node extends React.Component {
@@ -14,19 +14,14 @@ class Node extends React.Component {
     const { node, zoom, onClickAction } = this.props
     return (
       <Resizable
-        className="box box3"
         width={ node.width * (zoom / 100) }
         height={ node.height * (zoom / 100) }
         axis={ node.active ? "both" : "none" }
         onResize={ this.onResizeHandler }
         style={{
-          // backgroundColor: node.color,
-          // borderColor: node.borderColor,
           position: "absolute",
           left: node.x * (zoom / 100),
           top: node.y * (zoom / 100),
-          // width: node.width * (zoom / 100),
-          // height: node.height * (zoom / 100)
       }}
       >
         <div
@@ -34,9 +29,6 @@ class Node extends React.Component {
           style={{
             backgroundColor: node.color,
             borderColor: node.borderColor,
-            // position: "absolute",
-            // left: node.x * (zoom / 100),
-            // top: node.y * (zoom / 100),
             width: node.width * (zoom / 100),
             height: node.height * (zoom / 100)
           }}

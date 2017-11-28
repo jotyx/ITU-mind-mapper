@@ -9,9 +9,10 @@ body {
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   color: #555; }
 
-.upload {
+.upload > a {
   margin-left: 20px;
-  color: black; }
+  color: #333;
+  text-decoration: inherit; }
 
 .md-display-4 {
   letter-spacing: -.1px; }
@@ -3687,7 +3688,7 @@ tbody .md-table-row {
       -webkit-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.57);
       -moz-box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.57);
       box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.57); }
-    .map .node:hover .react-resizable-handle {
+    .map .node:hover.active .react-resizable-handle {
       display: block; }
     .map .node .title {
       width: 100%;

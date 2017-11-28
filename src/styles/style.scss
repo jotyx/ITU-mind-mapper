@@ -26,8 +26,11 @@ body {
 }
 
 .upload {
-  margin-left: 20px;
-  color: black;
+  & > a {
+    margin-left: 20px;
+    color: #333;
+    text-decoration: inherit;
+  }
 }
 
 @import "../../node_modules/react-md/src/scss/react-md";
