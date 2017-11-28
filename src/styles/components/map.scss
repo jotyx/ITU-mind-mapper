@@ -1,7 +1,10 @@
-.map {
+.outer-map {
   width: 100%;
-  height: calc(100vh - #{$height-work-bar});
+  height: calc(100vh - #{$height-work-bar} - #{$height-maps-bar});
   overflow: scroll;
+}
+
+.map {
   position: relative;
 
   .node {

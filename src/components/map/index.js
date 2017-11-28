@@ -36,6 +36,7 @@ const Map = ({ activeMap, setActiveNode, activeNodeResizeNode }) => {
       maxBy(activeMap.nodes, item => item.y).height;
 
   return (
+    <div className="outer-map">
     <div
       className="map"
       id="map"
@@ -47,7 +48,7 @@ const Map = ({ activeMap, setActiveNode, activeNodeResizeNode }) => {
           activeMap
         ) &&
         setActiveNode(-1)}
-      style={{ backgroundColor: activeMap.backgroundColor }}
+      style={{ width: maxX+30, height: maxY+30, backgroundColor: activeMap.backgroundColor }}
     >
       {!isEmpty(linesPoints) && (
         <svg style={{ width: maxX, height: maxY }}>
@@ -71,6 +72,7 @@ const Map = ({ activeMap, setActiveNode, activeNodeResizeNode }) => {
           onResizeNode={activeNodeResizeNode}
         />
       ))}
+    </div>
     </div>
   );
 };

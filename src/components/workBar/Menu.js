@@ -1,11 +1,14 @@
+import { find, isEmpty } from "lodash";
+import domtoimage from "dom-to-image";
+
 import React from "react";
 import { connect } from "react-redux";
 import { compose } from "recompose";
-import { find, isEmpty } from "lodash";
 import { DropdownButton, MenuItem, Glyphicon } from "react-bootstrap";
 import ReactTooltip from "react-tooltip";
 import FileReaderInput from "react-file-reader-input";
 
+import { downloadFile } from "../../utils";
 import {
   newNode,
   removeNode,
@@ -18,7 +21,6 @@ import { newMap } from "../../actions/mapsActions";
 import { loadMap } from "../../actions/mapsActions";
 import { setDialog } from "../../actions/appActions";
 
-import { downloadFile } from "../../utils";
 
 const Menu = ({
   newMap,
@@ -56,7 +58,6 @@ const Menu = ({
               Načíst mapu ze souboru
           </MenuItem>
         </FileReaderInput>
-
         <MenuItem divider />
         <MenuItem
           eventKey="3"
@@ -72,18 +73,46 @@ const Menu = ({
         <MenuItem
           eventKey="4"
           onClick={() =>
+            domtoimage.toJpeg(document.getElementById("map"), { quality: 0.60 })
+              .then(function (dataUrl) {
+                var link = document.createElement('a');
+                link.download = `${activeMap.name}.jpeg`;
+                link.href = dataUrl;
+                link.click();
+              })
+          }
+        >
+        Exportovat do obrázku
+        </MenuItem>
+        <MenuItem
+          eventKey="4"
+          onClick={() =>
+            domtoimage.toSvg(document.getElementById("map"))
+              .then( (image) =>
+                downloadFile(
+                  `${activeMap.name}.svg`,
+                  image.substring(33), // cut "data:image/svg+xml;charset=utf-8" from the beginning
+                  "text/svg"
+                ))
+          }
+        >
+        Exportovat do SVG
+        </MenuItem>
+
+        <MenuItem divider />
+
+        <MenuItem
+          eventKey="5"
+          onClick={() =>
             setDialog("RenameMap", {
               name: activeMap.name
             })}
         >
           Přejmenovat
         </MenuItem>
-        <MenuItem
-          eventKey="5"
-        >
-        Exportovat do obrázku
-        </MenuItem>
+
         <MenuItem divider />
+
         <MenuItem
           eventKey="6"
           onClick={() =>
@@ -115,7 +144,9 @@ const Menu = ({
         >
           Změnit výchozí velikost uzlů
         </MenuItem>
+
         <MenuItem divider />
+
         <MenuItem
           eventKey="9"
           onClick={() =>
@@ -134,7 +165,9 @@ const Menu = ({
         >
           Změnit barvu spojnic
         </MenuItem>
+
         <MenuItem divider className="mobile-only" />
+
         <MenuItem
           eventKey="11"
           onClick={() => newNode()}

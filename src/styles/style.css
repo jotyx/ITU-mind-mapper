@@ -3590,7 +3590,8 @@ tbody .md-table-row {
   flex-direction: column; }
 
 .maps-bar {
-  width: 100%; }
+  width: 100%;
+  height: 34px; }
   .maps-bar .icon {
     font-size: 12px;
     cursor: pointer; }
@@ -3669,10 +3670,12 @@ tbody .md-table-row {
         top: 15px;
         left: 15px; }
 
-.map {
+.outer-map {
   width: 100%;
-  height: calc(100vh - 57px);
-  overflow: scroll;
+  height: calc(100vh - 57px - 34px);
+  overflow: scroll; }
+
+.map {
   position: relative; }
   .map .node {
     display: flex;
