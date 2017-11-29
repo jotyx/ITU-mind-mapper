@@ -84,11 +84,20 @@ export const renameMap = (oldName, newName) => (dispatch, getState) => {
 };
 
 export const loadMap = data => (dispatch, getState) => {
-  const activeMap = find(getState().maps.list, m => m.active);
   const loadedMap = JSON.parse(data);
 
-  if (activeMap.name === loadedMap.name) {
-    loadedMap.name = loadedMap.name + "-1";
+  if (find(getState().maps.list, m => m.name === loadedMap.name)) {
+    const maxNum = max(
+      map(
+        filter(getState().maps.list, m =>
+          m.name.match(new RegExp("^" + loadedMap.name + " \\d+$"))
+        ),
+        m => parseInt(m.name.replace(/^.*(?=\d+$)/g, ""), 10)
+      )
+    );
+
+    if (isNaN(maxNum)) loadedMap.name = loadedMap.name + " 1";
+    else loadedMap.name = loadedMap.name + " " + (maxNum + 1);
   }
   dispatch(addMap(loadedMap));
 };
