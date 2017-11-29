@@ -28,12 +28,12 @@ const Map = ({ activeMap, setActiveNode, activeNodeResizeNode, activeNodeResizeN
 
   const maxX = isEmpty(activeMap.nodes)
     ? 0
-    : maxBy(activeMap.nodes, item => item.x).x +
-      maxBy(activeMap.nodes, item => item.x).width;
+    : ( maxBy(activeMap.nodes, item => item.x).x +
+        maxBy(activeMap.nodes, item => item.x).width ) * (activeMap.zoom / 100);
   const maxY = isEmpty(activeMap.nodes)
     ? 0
-    : maxBy(activeMap.nodes, item => item.y).y +
-      maxBy(activeMap.nodes, item => item.y).height;
+    : ( maxBy(activeMap.nodes, item => item.y).y +
+        maxBy(activeMap.nodes, item => item.y).height )  * (activeMap.zoom / 100);
 
   return (
     <div className="outer-map">
@@ -51,7 +51,7 @@ const Map = ({ activeMap, setActiveNode, activeNodeResizeNode, activeNodeResizeN
       style={{ width: maxX+30, height: maxY+30, backgroundColor: activeMap.backgroundColor }}
     >
       {!isEmpty(linesPoints) && (
-        <svg style={{ width: maxX, height: maxY }}>
+        <svg style={{ width: "inherit", height: "inherit" }}>
           {map(linesPoints, (l, i) => (
             <Line
               key={i}

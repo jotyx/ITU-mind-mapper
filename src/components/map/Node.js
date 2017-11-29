@@ -4,11 +4,13 @@ import classNames from "classnames";
 
 class Node extends React.Component {
   onResizeHandler = (event, { element, size }) => {
-    this.props.onResizeNode(size.width, size.height)
+    // scale sizes back according to zoom
+    this.props.onResizeNode(size.width / (this.props.zoom / 100), size.height / (this.props.zoom / 100))
   }
 
   onResizePreviewHandler = (event, { element, size }) => {
-    this.props.onResizeNodePreview(size.width, size.height)
+    // scale sizes back according to zoom
+    this.props.onResizeNodePreview(size.width / (this.props.zoom / 100), size.height / (this.props.zoom / 100))
   }
 
   render() {

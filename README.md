@@ -3,7 +3,7 @@
 @jotyx, @jirkacechak, @cubolu
 
 ## Bugs:
-- [ ] svg width and height not working with zoom
+- [x] svg width and height not working with zoom
 - [ ] map selection is based on name - name collision causing that map's edits are applied to both and both are selected in top panel
 - [ ] resize node collision detection
 
