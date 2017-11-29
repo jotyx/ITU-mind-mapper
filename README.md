@@ -9,8 +9,8 @@
 
 ## TODO:
 - [x] **placeholder** <del>rejected</del>
-- [ ] set size of node
-- [ ] image export
+- [x] set size of node
+- [x] image export
 - [ ] persist map on refresh
     - [x] load testing map from file
 - [ ] Help pop up
@@ -26,17 +26,20 @@
 - [ ] a new node should be without default text or this text should be removed on edit
 
 ## Acceptance criteria:
-- [ ] create map
-- [ ] edit map
+- [x] create map
+- [x] edit map
 - [ ] friendly UI
-- [ ] rename nodes
+- [x] rename nodes
 - [ ] move nodes
-- [ ] highlight node - change colour / bold / resize / ...
-    - [ ] *add subtasks*
+- [x] highlight node
+    - [x] change colour
+    - [x] font
+    - [x] resize
 - [ ] hide nodes
-- [ ] save map to file
-- [ ] load map from file
-- [ ] export map
-- [ ] zoom
+- [x] save map to file
+- [x] load map from file
+- [x] export map
+- [x] zoom
 - [ ] testing
+    - [ ] different browsers
 - [ ] cross-platform

@@ -4,10 +4,11 @@ import classNames from "classnames";
 
 class Node extends React.Component {
   onResizeHandler = (event, { element, size }) => {
-    console.log(this.props.node.id)
-    console.log(size.width)
-    console.log(size.height)
     this.props.onResizeNode(size.width, size.height)
+  }
+
+  onResizePreviewHandler = (event, { element, size }) => {
+    this.props.onResizeNodePreview(size.width, size.height)
   }
 
   render() {
@@ -17,7 +18,8 @@ class Node extends React.Component {
         width={ node.width * (zoom / 100) }
         height={ node.height * (zoom / 100) }
         axis={ node.active ? "both" : "none" }
-        onResize={ this.onResizeHandler }
+        onResizeStart={ this.onResizeHandler }
+        onResize={ this.onResizePreviewHandler }
         style={{
           position: "absolute",
           left: node.x * (zoom / 100),

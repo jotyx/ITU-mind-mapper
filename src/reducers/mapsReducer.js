@@ -301,6 +301,27 @@ const reducer = (state = initialState, action) => {
             : item
         )
       };
+    case c.ACTIVE_MAP_NODE_RESIZE:
+      return {
+        ...state,
+        list: map(
+          state.list,
+          map_item => map_item.active
+              ? {
+                  ...map_item,
+                  nodes: map(
+                    map_item.nodes,
+                    node => node.active
+                        ? {
+                            ...node,
+                            ...action.payload
+                          }
+                        : node
+                  )
+                }
+              : map_item
+        )
+      };
     default:
       return state;
   }

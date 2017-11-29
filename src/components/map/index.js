@@ -7,11 +7,11 @@ import Node from "./Node";
 import Line from "./Line";
 
 import { setActiveNode } from "../../actions/activeMapActions";
-import { activeNodeResizeNode } from "../../actions/activeMapActions";
+import { activeNodeResizeNode, activeNodeResizeNodePreview } from "../../actions/activeMapActions";
 
 import { coordinatesInsideNode } from "../../utils";
 
-const Map = ({ activeMap, setActiveNode, activeNodeResizeNode }) => {
+const Map = ({ activeMap, setActiveNode, activeNodeResizeNode, activeNodeResizeNodePreview }) => {
   const linesPoints = [];
 
   for (let i = 0; i < activeMap.nodes.length; i++) {
@@ -70,6 +70,7 @@ const Map = ({ activeMap, setActiveNode, activeNodeResizeNode }) => {
           zoom={activeMap.zoom}
           onClickAction={() => setActiveNode(i)}
           onResizeNode={activeNodeResizeNode}
+          onResizeNodePreview={activeNodeResizeNodePreview}
         />
       ))}
     </div>
@@ -81,5 +82,6 @@ export default compose(
   connect(({ maps: { list } }) => ({ activeMap: find(list, m => m.active) }), {
     setActiveNode,
     activeNodeResizeNode,
+    activeNodeResizeNodePreview,
   })
 )(Map);

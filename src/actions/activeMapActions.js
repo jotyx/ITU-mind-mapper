@@ -13,7 +13,8 @@ import {
   ACTIVE_MAP_NODES_MOVE_DOWN,
   ACTIVE_MAP_NODE_MOVE_RIGHT,
 	ACTIVE_MAP_NODES_MOVE_UP,
-	ACTIVE_MAP_NODE_MOVE_UP
+	ACTIVE_MAP_NODE_MOVE_UP,
+  ACTIVE_MAP_NODE_RESIZE
 } from "./constants";
 
 /* DEFAULT */
@@ -365,6 +366,11 @@ export const activeNodeChangeFont = (font, fontSize) => ({
 
 export const activeNodeResizeNode = (width, height) => ({
   type: ACTIVE_MAP_NODE_CHANGE,
+  payload: { width, height }
+});
+
+export const activeNodeResizeNodePreview = (width, height) => ({
+  type: ACTIVE_MAP_NODE_RESIZE,
   payload: { width, height }
 });
 
