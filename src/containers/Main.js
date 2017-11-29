@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose, lifecycle } from "recompose";
 
-import MapsBar from "../components/mapsBar";
+import MapsBar from "../components/MapsBar";
 import WorkBar from "../components/workBar";
 import Map from "../components/map";
 
