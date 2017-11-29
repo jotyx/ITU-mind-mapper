@@ -1,6 +1,7 @@
 .maps-bar {
   width: 100%;
   height: $height-maps-bar;
+  overflow: hidden;
 
   .icon {
     font-size: 12px;
