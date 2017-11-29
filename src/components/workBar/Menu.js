@@ -108,7 +108,7 @@ const Menu = ({
               name: activeMap.name
             })}
         >
-          Přejmenovat
+          Přejmenovat mapu
         </MenuItem>
 
         <MenuItem divider />
