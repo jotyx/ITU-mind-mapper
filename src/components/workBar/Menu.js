@@ -54,7 +54,7 @@ const Menu = ({
           id="my-file-input"
           onChange={(_, results) => loadMap(results[0][0].target.result)}
         >
-          <MenuItem eventKey="2" disable="true" className="upload">
+          <MenuItem eventKey="2" className="upload">
               Načíst mapu ze souboru
           </MenuItem>
         </FileReaderInput>
@@ -200,7 +200,7 @@ const Menu = ({
         </MenuItem>
         <MenuItem
           eventKey="15"
-          onClickAction={() =>
+          onClick={() =>
             setDialog("ActiveNodeFontChange", {
               font: activeNode.font,
               fontSize: activeNode.fontSize
@@ -211,14 +211,14 @@ const Menu = ({
         </MenuItem>
         <MenuItem
           eventKey="16"
-          onClickAction={() => setDialog("ActiveNodeTitleChange", activeNode)}
+          onClick={() => setDialog("ActiveNodeTitleChange", activeNode)}
           className="mobile-only"
         >
           Upravit uzel
         </MenuItem>
         <MenuItem
           eventKey="17"
-          onClickAction={() => removeNode()}
+          onClick={() => removeNode()}
           className="mobile-only"
         >
           Odstranit uzel
@@ -227,7 +227,7 @@ const Menu = ({
         {!isEmpty(activeMap.undo) && (
           <MenuItem
             eventKey="18"
-            onClickAction={() => !isEmpty(activeMap.undo) && undo()}
+            onClick={() => !isEmpty(activeMap.undo) && undo()}
             className="mobile-only"
           >
             Zpět
@@ -236,7 +236,7 @@ const Menu = ({
         {!isEmpty(activeMap.redo) && (
           <MenuItem
             eventKey="19"
-            onClickAction={() => !isEmpty(activeMap.redo) && redo()}
+            onClick={() => !isEmpty(activeMap.redo) && redo()}
             className="mobile-only"
           >
             Opakovat
@@ -245,7 +245,7 @@ const Menu = ({
         <MenuItem divider className="mobile-only" />
         <MenuItem
           eventKey="20"
-          onClickAction={() =>
+          onClick={() =>
             activeMap.zoom < 500 && changeZoom(activeMap.zoom + 25)}
           className="mobile-only"
         >
@@ -253,14 +253,14 @@ const Menu = ({
         </MenuItem>
         <MenuItem
           eventKey="21"
-          onClickAction={() => changeZoom(100)}
+          onClick={() => changeZoom(100)}
           className="mobile-only"
         >
           Původní přiblížení
         </MenuItem>
         <MenuItem
           eventKey="22"
-          onClickAction={() =>
+          onClick={() =>
             activeMap.zoom > 25 && changeZoom(activeMap.zoom - 25)}
           className="mobile-only"
         >
@@ -269,7 +269,7 @@ const Menu = ({
         <MenuItem divider className="mobile-only" />
         <MenuItem
           eventKey="23"
-          onClickAction={() => setDialog("Help")}
+          onClick={() => setDialog("Help")}
           className="mobile-only"
         >
           Nápověda
