@@ -1,4 +1,4 @@
-import { find, maxBy, isEmpty, concat, forEach } from "lodash";
+import { find, maxBy, isEmpty, concat, forEach, filter } from "lodash";
 
 import {
   ACTIVE_MAP_NODE_ADD,
@@ -12,8 +12,10 @@ import {
   MAP_SPACE_FACTOR,
   ACTIVE_MAP_NODES_MOVE_DOWN,
   ACTIVE_MAP_NODE_MOVE_RIGHT,
-	ACTIVE_MAP_NODES_MOVE_UP,
-	ACTIVE_MAP_NODE_MOVE_UP,
+  ACTIVE_MAP_NODE_MOVE_LEFT,
+  ACTIVE_MAP_NODES_MOVE_UP,
+  ACTIVE_MAP_NODE_MOVE_UP,
+  ACTIVE_MAP_NODE_MOVE_DOWN,
   ACTIVE_MAP_NODE_RESIZE
 } from "./constants";
 
@@ -99,8 +101,18 @@ export const moveNodeRight = (id, size) => ({
   payload: { id, size }
 });
 
+export const moveNodeLeft = (id, size) => ({
+  type: ACTIVE_MAP_NODE_MOVE_LEFT,
+  payload: { id, size }
+});
+
 export const moveNodeUp = (id, size) => ({
   type: ACTIVE_MAP_NODE_MOVE_UP,
+  payload: { id, size }
+});
+
+export const moveNodeDown = (id, size) => ({
+  type: ACTIVE_MAP_NODE_MOVE_DOWN,
   payload: { id, size }
 });
 
@@ -247,33 +259,38 @@ export const getAllDescendantsIds = node => (dispatch, getState) => {
 };
 
 export const getMaxDepth = node => (dispatch, getState) => {
-	const activeMap = find(getState().maps.list, m => m.active);
+  const activeMap = find(getState().maps.list, m => m.active);
 
-	let depth = 1;
+  let depth = 1;
 
-	for (let i = 0; i < node.childNodes.length; i++) { // Cez všetky deti
-		for (let j = 0; j < activeMap.nodes.length; j++) { // Hladáme dieťa vo všetkých uzloch
-			if (activeMap.nodes[j].id === node.childNodes[i]) { // Našli sme child node
-				if (i === 0 && isEmpty(activeMap.nodes[j].childNodes)) // Ak je to prvy uzel, nič
-					break;
+  for (let i = 0; i < node.childNodes.length; i++) {
+    // Cez všetky deti
+    for (let j = 0; j < activeMap.nodes.length; j++) {
+      // Hladáme dieťa vo všetkých uzloch
+      if (activeMap.nodes[j].id === node.childNodes[i]) {
+        // Našli sme child node
+        if (i === 0 && isEmpty(activeMap.nodes[j].childNodes))
+          // Ak je to prvy uzel, nič
+          break;
 
-				if (i === 0) // Ak je prvy a má deti, nepočítať ho
-					depth--;
+        if (i === 0)
+          // Ak je prvy a má deti, nepočítať ho
+          depth--;
 
-				depth += dispatch(getMaxDepth(activeMap.nodes[j]));
-			}
-		}
-	}
-	return depth;
+        depth += dispatch(getMaxDepth(activeMap.nodes[j]));
+      }
+    }
+  }
+  return depth;
 };
 
 export const removeNode = parent => (dispatch, getState) => {
   const activeNode = find(
     find(getState().maps.list, m => m.active).nodes,
     n => n.active
-	);
+  );
 
-	var levelOfMovingUp = activeNode.y;
+  var levelOfMovingUp = activeNode.y;
 
   const ids = isEmpty(activeNode.childNodes)
     ? [activeNode.id]
@@ -282,67 +299,62 @@ export const removeNode = parent => (dispatch, getState) => {
   const activeMap = find(getState().maps.list, m => m.active);
 
   const space =
-  (activeMap.defaultNodeWidth + activeMap.defaultNodeHeight) /
-  MAP_SPACE_FACTOR;
+    (activeMap.defaultNodeWidth + activeMap.defaultNodeHeight) /
+    MAP_SPACE_FACTOR;
 
-	// Hladame rodiča mazaného uzla a či je prvý z childov
-	var parentID = null;
-	var isFirst = false;
-	for (let i = 0; i < activeMap.nodes.length; i++) {
-		if (activeMap.nodes[i].childNodes.length > 0) {
-			for (let j = 0; j < activeMap.nodes[i].childNodes.length; j++) {
-				if (activeMap.nodes[i].childNodes[j] === activeNode.id) {
-					parentID = activeMap.nodes[i].id;
-					if (j === 0) {
-						isFirst = true;
-					}
-				}
-			}
-		}
-	}
+  // Hladame rodiča mazaného uzla a či je prvý z childov
+  var parentID = null;
+  var isFirst = false;
+  for (let i = 0; i < activeMap.nodes.length; i++) {
+    if (activeMap.nodes[i].childNodes.length > 0) {
+      for (let j = 0; j < activeMap.nodes[i].childNodes.length; j++) {
+        if (activeMap.nodes[i].childNodes[j] === activeNode.id) {
+          parentID = activeMap.nodes[i].id;
+          if (j === 0) {
+            isFirst = true;
+          }
+        }
+      }
+    }
+  }
 
-	var depth = dispatch(getMaxDepth(activeNode));
+  var depth = dispatch(getMaxDepth(activeNode));
 
-	if (activeNode)
-	dispatch({
-		type: ACTIVE_MAP_NODE_REMOVE,
-		payload: { ids }
-	});
+  if (activeNode)
+    dispatch({
+      type: ACTIVE_MAP_NODE_REMOVE,
+      payload: { ids }
+    });
 
-	// Vymazavame prvy child uzol
-	if (isFirst) {
-		for(let i = 0; i < activeMap.nodes.length; i++) {
-			if (activeMap.nodes[i].id === parentID) {
-				var arrayOfChilds = activeMap.nodes[i].childNodes;
+  // Vymazavame prvy child uzol
+  if (isFirst) {
+    for (let i = 0; i < activeMap.nodes.length; i++) {
+      if (activeMap.nodes[i].id === parentID) {
+        var arrayOfChilds = activeMap.nodes[i].childNodes;
 
-				// Ak je to jediny child a ma max 1 potomka, neposuvať UP
-				if (arrayOfChilds.length === 1 && activeNode.childNodes.length <= 1) {
-					return;
-				}
-				break;
-			}
-		}
+        // Ak je to jediny child a ma max 1 potomka, neposuvať UP
+        if (arrayOfChilds.length === 1 && activeNode.childNodes.length <= 1) {
+          return;
+        }
+        break;
+      }
+    }
 
-		// Hladame vysku posledneho childu pred vymazaním
-		forEach(activeMap.nodes, node => {
-			if (node.id === arrayOfChilds[arrayOfChilds.length-1]) {
-				levelOfMovingUp = node.y;
-			}
-		});
+    // Hladame vysku posledneho childu pred vymazaním
+    forEach(activeMap.nodes, node => {
+      if (node.id === arrayOfChilds[arrayOfChilds.length - 1]) {
+        levelOfMovingUp = node.y;
+      }
+    });
 
-		forEach(arrayOfChilds, n => {
-			dispatch(
-				moveNodeUp(
-					n,
-					(activeMap.defaultNodeHeight + space)
-				)
-			);
-		});
-	}
+    forEach(arrayOfChilds, n => {
+      dispatch(moveNodeUp(n, activeMap.defaultNodeHeight + space));
+    });
+  }
 
-	for (let i = 0; i < depth; i++) {
-		dispatch(moveNodesUp(levelOfMovingUp, activeMap.defaultNodeHeight + space));
-	}
+  for (let i = 0; i < depth; i++) {
+    dispatch(moveNodesUp(levelOfMovingUp, activeMap.defaultNodeHeight + space));
+  }
 };
 
 export const activeNodeChangeColor = (color, borderColor, titleColor) => ({
@@ -362,17 +374,168 @@ export const activeNodeChangeFont = (font, fontSize) => ({
   }
 });
 
+export const findParent = id => (_, getState) => {
+  return find(find(getState().maps.list, m => m.active).nodes, node =>
+    find(node.childNodes, n => n === id)
+  );
+};
+
 /* RESIZE */
+
+export const moveDescendantsToRightBySize = (node, size) => (
+  dispatch,
+  getState
+) => {
+  forEach(node.childNodes, n => {
+    dispatch(moveNodeRight(n, size));
+    dispatch(
+      moveDescendantsToRightBySize(
+        find(find(getState().maps.list, m => m.active).nodes, l => l.id === n)
+          .id,
+        size
+      )
+    );
+  });
+};
+
+export const moveDescendantsToLeftBySize = (node, size) => (
+  dispatch,
+  getState
+) => {
+  forEach(node.childNodes, n => {
+    dispatch(moveNodeLeft(n, size));
+    dispatch(
+      moveDescendantsToLeftBySize(
+        find(find(getState().maps.list, m => m.active).nodes, l => l.id === n)
+          .id,
+        size
+      )
+    );
+  });
+};
+
+export const moveDescendantsUpBySize = (node, size) => (dispatch, getState) => {
+  forEach(node.childNodes, n => {
+    dispatch(moveNodeUp(n, size));
+    dispatch(
+      moveDescendantsUpBySize(
+        find(find(getState().maps.list, m => m.active).nodes, l => l.id === n)
+          .id,
+        size
+      )
+    );
+  });
+};
+
+export const moveDescendantsDownBySize = (node, size) => (
+  dispatch,
+  getState
+) => {
+  forEach(node.childNodes, n => {
+    dispatch(moveNodeDown(n, size));
+    dispatch(
+      moveDescendantsDownBySize(
+        find(find(getState().maps.list, m => m.active).nodes, l => l.id === n)
+          .id,
+        size
+      )
+    );
+  });
+};
 
 export const activeNodeResizeNode = (width, height) => ({
   type: ACTIVE_MAP_NODE_CHANGE,
   payload: { width, height }
 });
 
-export const activeNodeResizeNodePreview = (width, height) => ({
-  type: ACTIVE_MAP_NODE_RESIZE,
-  payload: { width, height }
-});
+export const activeNodeResizeNodePreview = (x, y, width, height) => (
+  dispatch,
+  getState
+) => {
+  const activeMap = find(getState().maps.list, m => m.active);
+  const ativeNode = find(activeMap.nodes, n => n.active);
+
+  const space =
+    (activeMap.defaultNodeWidth + activeMap.defaultNodeHeight) /
+    MAP_SPACE_FACTOR;
+
+  if (ativeNode.width > width) {
+    // left
+    forEach(ativeNode.childNodes, n => {
+      dispatch(moveNodeLeft(n, ativeNode.width - width));
+      dispatch(
+        moveDescendantsToLeftBySize(
+          find(activeMap.nodes, node => node.id === n),
+          ativeNode.width - width
+        )
+      );
+    });
+  } else {
+    // right
+    const nodesToRight = filter(
+      activeMap.nodes,
+      n =>
+        !n.active &&
+        (x + width >= n.x - space &&
+          n.x > x &&
+          find(ativeNode.childNodes, ch => ch === n.id) &&
+          ((y >= n.y && y <= n.y + n.height) ||
+            (n.y >= y && n.y <= y + height)))
+    );
+
+    forEach(nodesToRight, n => {
+      dispatch(moveNodeRight(n.id, x + width - (n.x - space) + 1));
+      dispatch(moveDescendantsToRightBySize(n, x + width - (n.x - space) + 1));
+    });
+  }
+
+  if (ativeNode.height > height) {
+    // up
+    if (dispatch(findParent(ativeNode.id))) {
+      forEach(dispatch(findParent(ativeNode.id)).childNodes, ch => {
+        if (find(activeMap.nodes, node => node.id === ch).y > y) {
+          dispatch(moveNodeUp(ch, ativeNode.height - height));
+          dispatch(
+            moveDescendantsUpBySize(
+              find(activeMap.nodes, node => node.id === ch),
+              ativeNode.height - height
+            )
+          );
+        }
+      });
+    }
+  } else {
+    // down
+    const nodesDown = filter(
+      activeMap.nodes,
+      n =>
+        !n.active &&
+        (y + height >= n.y - space &&
+          n.y > y &&
+          ((x >= n.x && x <= n.x + n.width) || (n.x >= x && n.x <= x + width)))
+    );
+    forEach(nodesDown, n => {
+      if (dispatch(findParent(n.id))) {
+        forEach(dispatch(findParent(n.id)).childNodes, ch => {
+          if (find(activeMap.nodes, node => node.id === ch).y > y) {
+            dispatch(moveNodeDown(ch, y + height - (n.y - space) + 1));
+            dispatch(
+              moveDescendantsDownBySize(
+                find(activeMap.nodes, node => node.id === ch),
+                y + height - (n.y - space) + 1
+              )
+            );
+          }
+        });
+      }
+    });
+  }
+
+  dispatch({
+    type: ACTIVE_MAP_NODE_RESIZE,
+    payload: { x, y, width, height }
+  });
+};
 
 export const changeZoom = zoom => ({
   type: ACTIVE_MAP_CHANGE,

@@ -3,7 +3,7 @@ import { map, filter, isEmpty, find } from "lodash";
 import * as c from "../actions/constants";
 
 const initialState = {
-  list: [ { ...require("../res/test_map.json"), active: true} ]
+  list: [{ ...require("../res/test_map.json"), active: true }]
 };
 
 const reducer = (state = initialState, action) => {
@@ -261,7 +261,27 @@ const reducer = (state = initialState, action) => {
               : item
         )
       };
-      case c.ACTIVE_MAP_NODE_MOVE_UP:
+    case c.ACTIVE_MAP_NODE_MOVE_LEFT:
+      return {
+        ...state,
+        list: map(
+          state.list,
+          item =>
+            item.active
+              ? {
+                  ...item,
+                  nodes: map(
+                    item.nodes,
+                    n =>
+                      n.id === action.payload.id
+                        ? { ...n, x: n.x - action.payload.size }
+                        : n
+                  )
+                }
+              : item
+        )
+      };
+    case c.ACTIVE_MAP_NODE_MOVE_UP:
       return {
         ...state,
         list: map(
@@ -281,6 +301,26 @@ const reducer = (state = initialState, action) => {
               : item
         )
       };
+    case c.ACTIVE_MAP_NODE_MOVE_DOWN:
+      return {
+        ...state,
+        list: map(
+          state.list,
+          item =>
+            item.active
+              ? {
+                  ...item,
+                  nodes: map(
+                    item.nodes,
+                    n =>
+                      n.id === action.payload.id
+                        ? { ...n, y: n.y + action.payload.size }
+                        : n
+                  )
+                }
+              : item
+        )
+      };
     case c.ACTIVE_MAP_NODES_MOVE_UP:
       return {
         ...state,
@@ -289,16 +329,16 @@ const reducer = (state = initialState, action) => {
           item =>
             item.active
               ? {
-                ...item,
-                nodes: map(
-                  item.nodes,
-                  n =>
-                    n.y >= action.payload.y
-                      ? { ...n, y: n.y - action.payload.size}
-                      : n
-                )
-              }
-            : item
+                  ...item,
+                  nodes: map(
+                    item.nodes,
+                    n =>
+                      n.y >= action.payload.y
+                        ? { ...n, y: n.y - action.payload.size }
+                        : n
+                  )
+                }
+              : item
         )
       };
     case c.ACTIVE_MAP_NODE_RESIZE:
@@ -306,12 +346,14 @@ const reducer = (state = initialState, action) => {
         ...state,
         list: map(
           state.list,
-          map_item => map_item.active
+          map_item =>
+            map_item.active
               ? {
                   ...map_item,
                   nodes: map(
                     map_item.nodes,
-                    node => node.active
+                    node =>
+                      node.active
                         ? {
                             ...node,
                             ...action.payload
