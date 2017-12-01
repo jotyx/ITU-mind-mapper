@@ -21,7 +21,6 @@ import { newMap } from "../../actions/mapsActions";
 import { loadMap } from "../../actions/mapsActions";
 import { setDialog } from "../../actions/appActions";
 
-
 const Menu = ({
   newMap,
   setDialog,
@@ -55,7 +54,7 @@ const Menu = ({
           onChange={(_, results) => loadMap(results[0][0].target.result)}
         >
           <MenuItem eventKey="2" className="upload">
-              Načíst mapu ze souboru
+            Načíst mapu ze souboru
           </MenuItem>
         </FileReaderInput>
         <MenuItem divider />
@@ -73,30 +72,29 @@ const Menu = ({
         <MenuItem
           eventKey="4"
           onClick={() =>
-            domtoimage.toJpeg(document.getElementById("map"), { quality: 0.60 })
-              .then(function (dataUrl) {
-                var link = document.createElement('a');
+            domtoimage
+              .toJpeg(document.getElementById("map"), { quality: 0.6 })
+              .then(function(dataUrl) {
+                var link = document.createElement("a");
                 link.download = `${activeMap.name}.jpeg`;
                 link.href = dataUrl;
                 link.click();
-              })
-          }
+              })}
         >
-        Exportovat do obrázku
+          Exportovat do obrázku
         </MenuItem>
         <MenuItem
           eventKey="4"
           onClick={() =>
-            domtoimage.toSvg(document.getElementById("map"))
-              .then( (image) =>
-                downloadFile(
-                  `${activeMap.name}.svg`,
-                  image.substring(33), // cut "data:image/svg+xml;charset=utf-8" from the beginning
-                  "text/svg"
-                ))
-          }
+            domtoimage.toSvg(document.getElementById("map")).then(image =>
+              downloadFile(
+                `${activeMap.name}.svg`,
+                image.substring(33), // cut "data:image/svg+xml;charset=utf-8" from the beginning
+                "text/svg"
+              )
+            )}
         >
-        Exportovat do SVG
+          Exportovat do SVG
         </MenuItem>
 
         <MenuItem divider />
@@ -134,7 +132,7 @@ const Menu = ({
         >
           Změnit výchozí font uzlů
         </MenuItem>
-        <MenuItem
+        {/*<MenuItem
           eventKey="8"
           onClick={() =>
             setDialog("DefaultNodeSizeChange", {
@@ -143,7 +141,7 @@ const Menu = ({
             })}
         >
           Změnit výchozí velikost uzlů
-        </MenuItem>
+        </MenuItem>*/}
 
         <MenuItem divider />
 
@@ -260,8 +258,7 @@ const Menu = ({
         </MenuItem>
         <MenuItem
           eventKey="22"
-          onClick={() =>
-            activeMap.zoom > 25 && changeZoom(activeMap.zoom - 25)}
+          onClick={() => activeMap.zoom > 25 && changeZoom(activeMap.zoom - 25)}
           className="mobile-only"
         >
           Oddálit

@@ -57,13 +57,13 @@ const WorkBar = ({
         </span>
       )}
       {activeNode && <div className="vertical-line desktop-only" />}
-      {activeNode && (
+      {/*{activeNode && (
         <Icon
           iconType="fa-files-o"
           tooltipLabel="Kopírovat uzel"
           onClickAction={() => null}
         />
-      )}
+      )}*/}
       {activeNode && (
         <Icon
           iconType="fa-paint-brush"
