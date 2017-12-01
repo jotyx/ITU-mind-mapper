@@ -375,9 +375,13 @@ export const activeNodeChangeFont = (font, fontSize) => ({
 });
 
 export const findParent = id => (_, getState) => {
-  return find(find(getState().maps.list, m => m.active).nodes, node =>
+  const activeMap = find(getState().maps.list, m => m.active);
+
+  const parent = find(activeMap.nodes, node =>
     find(node.childNodes, n => n === id)
   );
+
+  return parent;
 };
 
 /* RESIZE */
@@ -503,6 +507,16 @@ export const activeNodeResizeNodePreview = (x, y, width, height) => (
           );
         }
       });
+    } else {
+      forEach(
+        filter(activeMap.nodes, node => !dispatch(findParent(node.id))),
+        node => {
+          if (node.y > y) {
+            dispatch(moveNodeUp(node.id, ativeNode.height - height));
+            dispatch(moveDescendantsUpBySize(node, ativeNode.height - height));
+          }
+        }
+      );
     }
   } else {
     // down
@@ -527,6 +541,18 @@ export const activeNodeResizeNodePreview = (x, y, width, height) => (
             );
           }
         });
+      } else {
+        forEach(
+          filter(activeMap.nodes, node => !dispatch(findParent(node.id))),
+          node => {
+            if (node.y > y) {
+              dispatch(moveNodeDown(node.id, y + height - (n.y - space) + 1));
+              dispatch(
+                moveDescendantsDownBySize(node, y + height - (n.y - space) + 1)
+              );
+            }
+          }
+        );
       }
     });
   }
