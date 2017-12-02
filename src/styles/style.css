@@ -3590,8 +3590,8 @@ tbody .md-table-row {
   flex-direction: column; }
 
 img.transparent {
-  opacity: 0.3;
-  filter: alpha(opacity=30); }
+  opacity: 0.2;
+  filter: alpha(opacity=20); }
 
 .maps-bar {
   width: 100%;
