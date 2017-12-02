@@ -54,8 +54,8 @@ export const fontSizes = [
   { value: "28", label: "28" },
   { value: "30", label: "30" },
   { value: "32", label: "32" },
-  { value: "36", label: "36" },
+  /*{ value: "36", label: "36" },
   { value: "40", label: "40" },
   { value: "44", label: "44" },
-  { value: "50", label: "50" }
+  { value: "50", label: "50" }*/
 ];

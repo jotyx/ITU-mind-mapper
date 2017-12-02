@@ -1,4 +1,9 @@
 .main {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+
+img.transparent {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
 }
