@@ -1,4 +1,13 @@
-import { find, maxBy, isEmpty, concat, forEach, filter } from "lodash";
+import {
+  find,
+  maxBy,
+  isEmpty,
+  concat,
+  forEach,
+  filter,
+  map,
+  minBy
+} from "lodash";
 
 import {
   ACTIVE_MAP_NODE_ADD,
@@ -457,20 +466,20 @@ export const activeNodeResizeNodePreview = (x, y, width, height) => (
   getState
 ) => {
   const activeMap = find(getState().maps.list, m => m.active);
-  const ativeNode = find(activeMap.nodes, n => n.active);
+  const activeNode = find(activeMap.nodes, n => n.active);
 
   const space =
     (activeMap.defaultNodeWidth + activeMap.defaultNodeHeight) /
     MAP_SPACE_FACTOR;
 
-  if (ativeNode.width > width) {
+  if (activeNode.width > width) {
     // left
-    forEach(ativeNode.childNodes, n => {
-      dispatch(moveNodeLeft(n, ativeNode.width - width));
+    forEach(activeNode.childNodes, n => {
+      dispatch(moveNodeLeft(n, activeNode.width - width));
       dispatch(
         moveDescendantsToLeftBySize(
           find(activeMap.nodes, node => node.id === n),
-          ativeNode.width - width
+          activeNode.width - width
         )
       );
     });
@@ -482,41 +491,120 @@ export const activeNodeResizeNodePreview = (x, y, width, height) => (
         !n.active &&
         (x + width >= n.x - space &&
           n.x > x &&
-          find(ativeNode.childNodes, ch => ch === n.id) &&
+          find(activeNode.childNodes, ch => ch === n.id) &&
           ((y >= n.y && y <= n.y + n.height) ||
             (n.y >= y && n.y <= y + height)))
     );
 
+    if (!isEmpty(nodesToRight)) {
+      forEach(activeNode.childNodes, n => {
+        dispatch(moveNodeRight(n, x + width - (nodesToRight[0].x - space) + 1));
+        dispatch(
+          moveDescendantsToRightBySize(
+            find(activeMap.nodes, node => node.id === n),
+            x + width - (nodesToRight[0].x - space) + 1
+          )
+        );
+      });
+    }
+
+    /*
     forEach(nodesToRight, n => {
       dispatch(moveNodeRight(n.id, x + width - (n.x - space) + 1));
       dispatch(moveDescendantsToRightBySize(n, x + width - (n.x - space) + 1));
     });
+    */
   }
 
-  if (ativeNode.height > height) {
+  if (activeNode.height > height) {
     // up
-    if (dispatch(findParent(ativeNode.id))) {
-      forEach(dispatch(findParent(ativeNode.id)).childNodes, ch => {
+    if (dispatch(findParent(activeNode.id))) {
+      forEach(dispatch(findParent(activeNode.id)).childNodes, ch => {
         if (find(activeMap.nodes, node => node.id === ch).y > y) {
-          dispatch(moveNodeUp(ch, ativeNode.height - height));
+          dispatch(moveNodeUp(ch, activeNode.height - height));
           dispatch(
             moveDescendantsUpBySize(
               find(activeMap.nodes, node => node.id === ch),
-              ativeNode.height - height
+              activeNode.height - height
             )
           );
         }
       });
     } else {
+      let flag = true;
+
       forEach(
-        filter(activeMap.nodes, node => !dispatch(findParent(node.id))),
+        filter(
+          activeMap.nodes,
+          node => !dispatch(findParent(node.id)) && node.id !== activeNode.id
+        ),
         node => {
-          if (node.y > y) {
-            dispatch(moveNodeUp(node.id, ativeNode.height - height));
-            dispatch(moveDescendantsUpBySize(node, ativeNode.height - height));
-          }
+          if (
+            find(
+              activeNode.childNodes,
+              ch =>
+                find(activeMap.nodes, n => n.id === ch).y +
+                  find(activeMap.nodes, n => n.id === ch).height +
+                  space >
+                node.y
+            )
+          )
+            flag = false;
         }
       );
+
+      if (flag) {
+        forEach(
+          filter(activeMap.nodes, node => !dispatch(findParent(node.id))),
+          node => {
+            if (node.y > y) {
+              dispatch(moveNodeUp(node.id, activeNode.height - height));
+              dispatch(
+                moveDescendantsUpBySize(node, activeNode.height - height)
+              );
+            }
+          }
+        );
+      } else {
+        const maxNode = maxBy(
+          map(activeNode.childNodes, ch =>
+            find(activeMap.nodes, n => n.id === ch)
+          ),
+          n => n.y
+        );
+
+        const minNode = minBy(
+          filter(
+            activeMap.nodes,
+            node => !dispatch(findParent(node.id)) && node.id !== activeNode.id
+          ),
+          node => node.y > activeNode.y
+        );
+
+        forEach(
+          filter(activeMap.nodes, node => !dispatch(findParent(node.id))),
+          node => {
+            if (
+              (node.y > y &&
+                maxNode.y + maxNode.height + space - minNode.y > 10) ||
+              maxNode.y + maxNode.height + space - minNode.y < -10
+            ) {
+              dispatch(
+                moveNodeDown(
+                  node.id,
+                  maxNode.y + maxNode.height + space - minNode.y
+                )
+              );
+              dispatch(
+                moveDescendantsDownBySize(
+                  node,
+                  maxNode.y + maxNode.height + space - minNode.y
+                )
+              );
+            }
+          }
+        );
+      }
     }
   } else {
     // down
