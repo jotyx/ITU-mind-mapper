@@ -7,16 +7,7 @@ import { MAX_NODE_SIZE, MIN_NODE_SIZE } from "../../actions/constants";
 class Node extends React.Component {
   onResizeHandler = (event, { element, size }) => {
     // scale sizes back according to zoom
-    this.props.onResizeNode(
-      (size.width > MAX_NODE_SIZE
-        ? MAX_NODE_SIZE
-        : size.width < MIN_NODE_SIZE ? MIN_NODE_SIZE : size.width) /
-        (this.props.zoom / 100),
-      (size.height > MAX_NODE_SIZE
-        ? MAX_NODE_SIZE
-        : size.height < MIN_NODE_SIZE ? MIN_NODE_SIZE : size.height) /
-        (this.props.zoom / 100)
-    );
+    this.props.onResizeNode(size.width / (this.props.zoom / 100), size.height / (this.props.zoom / 100));
   };
 
   onResizePreviewHandler = (event, { element, size }) => {
@@ -24,14 +15,8 @@ class Node extends React.Component {
     this.props.onResizeNodePreview(
       this.props.node.x,
       this.props.node.y,
-      (size.width > MAX_NODE_SIZE
-        ? MAX_NODE_SIZE
-        : size.width < MIN_NODE_SIZE ? MIN_NODE_SIZE : size.width) /
-        (this.props.zoom / 100),
-      (size.height > MAX_NODE_SIZE
-        ? MAX_NODE_SIZE
-        : size.height < MIN_NODE_SIZE ? MIN_NODE_SIZE : size.height) /
-        (this.props.zoom / 100)
+      size.width / (this.props.zoom / 100),
+      size.height / (this.props.zoom / 100)
     );
   };
 
@@ -44,6 +29,8 @@ class Node extends React.Component {
         axis={node.active ? "both" : "none"}
         onResizeStart={this.onResizeHandler}
         onResize={this.onResizePreviewHandler}
+        minConstraints={[MIN_NODE_SIZE * (zoom / 100), MIN_NODE_SIZE * (zoom / 100)]} 
+        maxConstraints={[MAX_NODE_SIZE * (zoom / 100), MAX_NODE_SIZE * (zoom / 100)]}
         style={{
           position: "absolute",
           left: node.x * (zoom / 100),
