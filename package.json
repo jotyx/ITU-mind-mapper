@@ -2,7 +2,6 @@
   "name": "itu-mind-mapper",
   "version": "1.0.0",
   "description": "Mind Mapper",
-  "author": "https://github.com/patrenky",
   "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
